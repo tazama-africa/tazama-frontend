@@ -8,7 +8,7 @@ const EnvConfigs: {
   };
 } = {
   development: {
-    apiEndPoint: backendURL + "/api",
+    apiEndPoint: "http://127.0.1:8000/api",
     paypalClientId:
       "AScIXetQlA8kASMe7yW0aOHbOSalPCs_ILSylSudOlPFDkNVrUZizzwoi4O01eN_QMptiZ9cySRzlI5g",
     env: "local",

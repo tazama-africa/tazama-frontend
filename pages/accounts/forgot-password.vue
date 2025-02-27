@@ -4,13 +4,14 @@
         <form
             class="lg:w-[25%] w-[100%] flex flex-col justify-between j mx-auto lg:bg-white px-6 lg:px-8 py-10 pt-5 lg:border lg:shadow-xl rounded-xl">
             <div>
-                <div class="flex items-center justify-center ">
-                    <NuxtImg src="/logo-long.png" class="lg:w-[60%] w-[80%] h-32 object-cover" />
+                <div class="flex items-center text-2xl font-bold my-10 justify-center">
+                    <NuxtImg src="/logo-long.png" class="lg:w-[60%] w-[80%] h-32 object-cover hidden" />
+                    TAZAMA
                 </div>
                 <h2 class="text-gray-800 text-2xl font-bold ">
                     Forgot password
                 </h2>
-                <p class="text-xs border-b border-blue-200 w-full pb-2 mb-2">
+                <p class="text-xs border-b border-orange-200 w-full pb-2 mb-2">
                     An email with a reset link will be sent
                 </p>
 
@@ -29,14 +30,14 @@
                         </svg>
                     </div>
                     <input type="text" id="email-address-icon"
-                        class="bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  "
+                        class="bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full ps-10 p-2.5  "
                         placeholder="name@gmail.com">
                 </div>
 
-                <nuxt-link to="/accounts/login" class="text-blue-500 text-xs my-4  font-bold">
+                <nuxt-link to="/accounts/login" class="text-orange-500 text-xs my-4  font-bold">
                     Back to Login
                 </nuxt-link>
-                <button type="submit" class="text-white hover:bg-gradient-to-r hover:from-indigo-950 hover:to-blue-950 focus:ring-4 mt-6 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm w-full px-5 py-2.5 text-center bg-gradient-to-l from-blue-600 to-blue-500 
+                <button type="submit" class="text-white hover:bg-gradient-to-r hover:from-yellow-950 hover:to-orange-500 focus:ring-4 mt-6 focus:outline-none focus:ring-orange-300 font-medium rounded-full text-sm w-full px-5 py-2.5 text-center bg-gradient-to-l from-orange-600 to-orange-500
                     transition-all duration-300 ease-in-out hover:shadow-lg">
                     Send
                 </button>
@@ -44,8 +45,8 @@
             </div>
         </form>
         <div class="flex gap-2 items-center text-sm mb-8 justify-center text-gray-500">
-            <nuxt-link to="/" class="border-r pr-2 border-gray-400 hover:underline hover:text-blue-600">Home</nuxt-link>
-            <nuxt-link to="/about" class="hover:underline hover:text-blue-600">About</nuxt-link>
+            <nuxt-link to="/" class="border-r pr-2 border-gray-400 hover:underline hover:text-orange-600">Home</nuxt-link>
+            <nuxt-link to="/about" class="hover:underline hover:text-orange-600">About</nuxt-link>
         </div>
     </div>
 </template>

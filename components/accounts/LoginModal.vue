@@ -20,7 +20,9 @@ const genres = [
   { id: 2, label: 'Pop' },
   { id: 3, label: 'Jazz' },
   { id: 4, label: 'Hip-Hop' },
-  { id: 5, label: 'Reggae' }
+  { id: 5, label: 'Reggae' },
+  { id: 6, label: 'Urban Tone' },
+  { id: 7, label: 'Carribean' }
 ]
 
 const selected = ref([genres[3]])
@@ -242,7 +244,7 @@ const submitForm = async () => {
                         </div>
 
                         <UInput v-model="email" placeholder="Your Email*" type="email" required />
-                        <UInput v-model="phone" placeholder="Phone Number" type="tel" required />
+                        <UInput v-model="phone" placeholder="Phone Number - (0712*****)" type="tel" required />
                         <UButton
                             class="w-full  hover:bg-orange-200 hover:text-orange-600 bg-green-600 text-white   py-3  px-6 flex items-center  transition"
                             block @click="registrationStep = 2">Next</UButton>
@@ -313,7 +315,10 @@ const submitForm = async () => {
                             </div>
                         </div>
                         <h2 class="text-lg font-bold">You're all set!</h2>
-                        <p class="text-gray-600">Enjoy unlimited music with Tazama.</p>
+                        <div>
+                            <p class="text-gray-600 text-sm">Enjoy unlimited music with Tazama.</p>
+                            <p class="text-gray-600 text-sm">Connect to session and join the party!</p>
+                        </div>
                         <UButton block class="hidden" @click="registrationStep = 3">Back</UButton>
                         <UButton block
                             class="w-full  hover:bg-orange-200 hover:text-orange-600 bg-green-600 text-white   py-3  px-6 flex items-center  transition"

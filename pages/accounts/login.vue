@@ -37,6 +37,12 @@
                     transition-all duration-300 ease-in-out hover:shadow-lg">
                     Sign in
                 </button>
+                <p class="my-4 text-gray-500 text-xs">
+                    Don't have an account?
+                    <nuxt-link to="/accounts/register" class="text-orange-600 hover:text-green-400">
+                        Create Account
+                    </nuxt-link>
+                </p>
             </div>
         </form>
 

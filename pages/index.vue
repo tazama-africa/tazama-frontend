@@ -314,10 +314,31 @@
 
     <!-- <AccountsLogin /> -->
   </div>
-</template>
-
+</template> 
 <script setup>
+import { useAuthStore } from "@/stores/auth";
+import { useRouter } from "vue-router";
+import { onMounted, ref, watchEffect } from "vue";
 
+const authStore = useAuthStore();
+const router = useRouter();
+const username = ref("Guest");
+
+// Ensure auth data is loaded on refresh
+onMounted(() => {
+  authStore.loadAuthData(); // Load user data from localStorage
+
+  console.log("User on refresh:", authStore.user);
+
+  if (authStore.user) {
+    router.push("/dashboard");
+  }
+});
+
+// Watch for username changes
+watchEffect(() => {
+  username.value = authStore.user?.username || "Guest";
+});
 </script>
 
 <style lang="scss" scoped></style>

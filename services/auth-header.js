@@ -1,12 +1,14 @@
 export function authHeader() {
-    // return authorization header with jwt token
     let access_token = '';
+
     if (typeof window !== 'undefined') {
-        access_token = typeof window !== 'undefined' ? localStorage.getItem('token') : '';
-        //temp fix 
+        // Get token from localStorage
+        access_token = localStorage.getItem('accessToken') || '';
+
+        // Temp fix: Try getting from cookies if missing
         if (!access_token) {
-            let t = useCookie('token')
-            access_token = typeof window!== 'undefined' ? t.value : '';
+            const t = useCookie('accessToken');
+            access_token = t?.value || '';  // Ensure t.value exists
         }
     }
     

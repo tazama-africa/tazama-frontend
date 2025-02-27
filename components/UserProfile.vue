@@ -9,15 +9,14 @@ import { watchEffect, ref } from "vue";
 const username = ref("Guest");
 
 watchEffect(() => {
-  username.value = authStore.user?.username || "Guest";
+  username.value = authStore.user?.email || "Guest";
 });
 
 </script>
 
 <template>
-  <div class='uppercase'>
+  <div class=''>
       {{ username }}
-      <!-- {{ authStore.user }} -->
   </div>
 </template>
   

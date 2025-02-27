@@ -10,7 +10,9 @@ export const requestOptions = {
 
 export const userService = {
     login,
-    register
+    register,
+    getListenerGenres,
+    getListenerPlaylist
 };
 
 
@@ -30,3 +32,26 @@ async function register(email, phone, password, genres) {
         body: {email, phone, password, genres}
     });
 }
+
+
+
+async function getListenerGenres() {
+    const API_URL = useRuntimeConfig().public.apiBase;
+    
+    return await $fetch(API_URL + "/listener-genres/", {
+        method: "GET",
+        headers: authHeader(),
+    });
+}
+
+
+async function getListenerPlaylist() {
+    const API_URL = useRuntimeConfig().public.apiBase;
+    
+    return await $fetch(API_URL + "/recommended-playlists/", {
+        method: "GET",
+        headers: authHeader(),
+    });
+}
+
+

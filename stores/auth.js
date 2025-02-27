@@ -2,43 +2,45 @@ import { defineStore } from "pinia";
 import { userService } from "@/services/userService";
 import Swal from "sweetalert2";
 
+
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 4000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+});
+
 export const useAuthStore = defineStore("auth", {
   state: () => ({
     token: null,
     refreshToken: null,
     user: null,
     genres: [],
+    playlist: [],
     loading: false,
     error: null,
   }),
   actions: {
     async login(email, password) {
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 4000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.addEventListener("mouseenter", Swal.stopTimer);
-          toast.addEventListener("mouseleave", Swal.resumeTimer);
-        },
-      });
-
       try {
-        // Call the API
         const response = await userService.login(email, password);
-
         if (!response.tokens || !response.tokens.access) {
           throw new Error("Invalid Credentials");
         }
 
-        // Save tokens & user data
         this.setAuthData(
           response.tokens.access,
           response.tokens.refresh,
           response.user
         );
+
+        // Fetch listener genres
+        await this.fetchPlaylist();
 
         navigateTo("/dashboard");
         Toast.fire({
@@ -52,49 +54,62 @@ export const useAuthStore = defineStore("auth", {
         });
       }
     },
+
     async registerUser(email, phone, password, genres) {
-      this.loading = true
-      this.errorMessage = ''
-      
+      this.loading = true;
+      this.errorMessage = "";
+
       try {
-          // Simulating an API call
-          await new Promise((resolve) => setTimeout(resolve, 1000)) 
-          try {
-            // Call the API
-            const response = await userService.register(email, phone, password, genres);    
-            if (!response.tokens || !response.tokens.access) {
-              throw new Error("Invalid Credentials");
-            }    
-            // Save tokens & user data
-            this.setAuthData(
-              response.tokens.access,
-              response.tokens.refresh,
-              response.user
-            );    
-            navigateTo("/dashboard");
-            Toast.fire({
-              icon: "success",
-              title: "Login Successful!",
-            });
-          } catch (error) {
-            Toast.fire({
-              icon: "error",
-              title: "Confirm Email and Password",
-            });
-          }
+        const response = await userService.register(email, phone, password, genres);
+        if (response.tokens && response.tokens.access) {
+          this.setAuthData(
+            response.tokens.access,
+            response.tokens.refresh,
+            response.user
+          );
+
+          // Fetch listener genres
+          await this.fetchPlaylist();
+
+          navigateTo("/dashboard");
+          Toast.fire({
+            icon: "success",
+            title: "Registration Successful!",
+          });
+        }
       } catch (error) {
-          this.errorMessage = 'Registration failed. Try again.'
+        Toast.fire({
+          icon: "error",
+          title: "Registration failed",
+        });
       } finally {
-          this.loading = false
+        this.loading = false;
       }
-  },
-    
+    },
+
+    async fetchGenres() {
+      try {
+        const genres = await userService.getListenerGenres();
+        this.genres = genres;
+      } catch (error) {
+        console.error("Failed to fetch genres:", error);
+      }
+    },
+
+    async fetchPlaylist() {
+      try {
+        const response = await userService.getListenerPlaylist();
+        this.playlist = response.recommended_playlists; // Save in store
+      } catch (error) {
+        console.error("Failed to fetch playlists:", error);
+      }
+    },
+
     setAuthData(accessToken, refreshToken, user) {
       this.token = accessToken;
       this.refreshToken = refreshToken;
       this.user = user;
 
-      // Store tokens in localStorage
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
       localStorage.setItem("user", JSON.stringify(user));
