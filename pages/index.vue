@@ -99,8 +99,14 @@
                   </p>
                   <br />
                   <div class="space-x-4">
+                    <nuxt-link to="/accounts/login" v-if="username === 'Guest'" class="bg-gradient-to-r from-orange-500 w-60 to-yellow-500 hover:bg-gradient-to-l text-white py-3 px-8 rounded-lg">
+                      Get Started
+                    </nuxt-link> 
+                    <div v-else>
+                      <ConnectSession />
+                    </div>
                     
-                    <AccountsLoginModal />
+                    <!-- <AccountsLoginModal /> -->
                     <a href=""
                       class="px-6 hidden py-3 bg-gray-50 border border-orange-600 text-gray-800 rounded-lg shadow-lg hover:bg-orange-300">
                       Learn More
@@ -331,7 +337,7 @@ onMounted(() => {
   console.log("User on refresh:", authStore.user);
 
   if (authStore.user) {
-    router.push("/dashboard");
+    // router.push("/dashboard");
   }
 });
 
