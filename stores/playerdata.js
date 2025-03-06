@@ -27,16 +27,17 @@ export const usePlayerStore = defineStore("player", {
         console.error("Error fetching meter data:", error);
       }
     },
-    async postPlayerData( playerNo ) {
+    async postPlayerData(playerNo) {
       try {
-        console.log(playerNo )
-        navigateTo("/player/jam-music");
+        console.log(playerNo, "player No")
+        // navigateTo("/player/jam-music");
         Toast.fire({
           icon: "success",
-          title: "Connected to Jam! Like and suggest songs. Enjoy!",
+          title: "Connected to test Jam! Like and suggest songs. Enjoy!",
         });
-        // const response = await playerService.connectPlayer( playerNo );
-        // this.playlistdata = response; // Store data in state
+        const response = await playerService.connectPlayer(playerNo);
+        this.playlistdata = response; // Store data in state
+        console.log(response)
       } catch (error) {
         console.error("Error fetching meter data:", error);
       }

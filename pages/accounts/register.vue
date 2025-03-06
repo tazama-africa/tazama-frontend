@@ -4,9 +4,8 @@
         <form @submit.prevent="handleLogin"
             class="lg:w-[25%] w-[100%] flex flex-col justify-between mx-auto lg:bg-white px-6 lg:px-8 py-10 pt-5 lg:border lg:shadow-xl rounded-xl">
             <div v-if="step === 1">
-                <div class="flex items-center text-2xl font-bold my-10 justify-center">
-                    <NuxtImg src="/logo-long.png" class="lg:w-[60%] w-[80%] h-32 object-cover hidden" />
-                    TAZAMA
+                <div class="flex items-center text-2xl font-bold my-10 mb-3 justify-center">
+                    <NuxtImg src="/logo-long-t.png" class="lg:w-[60%] w-[80%] h-32 object-cover" />
                 </div>
                 <div class="text-center">
                     <h2 class="text-gray-800 text-2xl font-bold">Create Account</h2>
@@ -325,7 +324,7 @@ const genres = [
     { id: 1, label: "Rock" },
     { id: 2, label: "Pop" },
     { id: 3, label: "Jazz" },
-    { id: 4, label: "Hip-Hop" },
+    { id: 4, label: "Hip Hop" },
     { id: 5, label: "Reggae" },
     { id: 6, label: "Urban Tone" },
     { id: 7, label: "Caribbean" },

@@ -1,7 +1,8 @@
 <template>
-    <div class="rounded-t-2xl">
+    <div class="lg:rounded-t-2xl">
         <div class="ease-in-out" data-carousel-item>
-            <div class="relative duration-1000 p-3 lg:rounded-t-2xl h-full bg-gradient-to-b from-orange-700 via-orange-500 to-orange-300">
+            <div
+                class="relative duration-1000 p-3 lg:rounded-t-2xl h-full rounded-none bg-gradient-to-b from-orange-700 via-orange-500 to-orange-300">
                 <!-- Background image with overlay -->
 
                 <!-- Content on top of the image -->
@@ -32,20 +33,20 @@
                             </div>
                         </div>
                         <div class="text-xl px-4 my-4 flex justify-between items-center gap-2  text-gray-600" style="
-                font-weight: 700;
-                margin: 10px 0;
-                font-family: Fredoka, sans-serif;
-                text-align: left;
-              ">
+                            font-weight: 700;
+                            margin: 10px 0;
+                            font-family: Fredoka, sans-serif;
+                            text-align: left;
+                        ">
                             <div class="flex mt-1">
                                 <div></div>
                                 <div class="text-xs ml-2 space-y-2 text-green-50">
-                                   <p class="font-bold">
-                                    Enjoy the full experience today
-                                   </p>
-                                   <p class="font-normal" >
-                                    Search and suggest songs to playlist, Like to alter song position on playlist!
-                                   </p>
+                                    <p class="font-bold">
+                                        Enjoy the full experience today
+                                    </p>
+                                    <p class="font-normal">
+                                        Search and suggest songs to playlist, Like to alter song position on playlist!
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -77,6 +78,7 @@
             <div class="p-0">
                 <PreferredPlaylist />
             </div>
+            <br><br><br><br><br><br>
         </div>
     </div>
 
@@ -102,7 +104,7 @@ watchEffect(() => {
 
 // Define the page layout
 definePageMeta({
-    layout: "dashboard",
+    layout: "player",
 });
 </script>
 

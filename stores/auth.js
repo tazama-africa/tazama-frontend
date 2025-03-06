@@ -71,7 +71,7 @@ export const useAuthStore = defineStore("auth", {
           // Fetch listener genres
           await this.fetchPlaylist();
 
-          navigateTo("/dashboard");
+          // navigateTo("/dashboard");
           Toast.fire({
             icon: "success",
             title: "Registration Successful!",

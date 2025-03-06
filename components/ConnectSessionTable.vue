@@ -194,7 +194,7 @@ const filteredRows = computed(() => {
 </script>
 
 <template>
-  <div class="flex flex-col h-[90%]">
+  <div class="flex flex-col ">
     <div class="flex items-center lg:px-10 px-2 justify-between py-3">
       <div class="font-small">
         <div class="flex items-center gap-2">
@@ -228,7 +228,7 @@ const filteredRows = computed(() => {
     </div>
 
     <!-- Container with fixed height and scroll -->
-    <div class="overflow-auto overflow-x-hidden " style="max-height: 60vh;">
+    <div class="overflow-auto overflow-x-hidden lg:p-5 pb-10" style="max-height: 60vh;">
       <UTable :rows="filteredRows" :columns="columns" hover>
         <!-- ID Column: Hidden on small screens -->
         <template #id-data="{ row }">

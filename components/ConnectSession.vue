@@ -19,7 +19,7 @@
                     </g>
                 </svg>
                 <div class="text-xs">
-                    Connect to jam
+                    Connect jam
                 </div>
             </button>
         </form>
@@ -41,9 +41,6 @@ const playerNo = ref('');
 
 const handleSubmit = async () => {
     if (!playerNo.value) return;
-
-    const data = { player_no: playerNo.value };
-
     try {
         await playerStore.postPlayerData(playerNo.value)
     } catch (error) {

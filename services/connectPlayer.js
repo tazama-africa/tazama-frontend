@@ -13,13 +13,16 @@ export const playerService = {
 };
 
 
-async function connectPlayer( playerNo ) {
+async function connectPlayer(playerNo) {
   const API_URL = useRuntimeConfig().public.apiBase;
   
   return await $fetch(API_URL + "/connect-player/", {
-      method: "POST",
-      headers: authHeader(),
-      body: { playerNo }
+    method: "POST",
+    headers: {
+      ...authHeader(),
+      "Content-Type": "application/json", // Ensure JSON format
+    },
+    body: JSON.stringify({ player_no: playerNo }) // Ensure JSON body
   });
 }
 

@@ -1,22 +1,18 @@
 <script setup>
 import { useAuthStore } from "@/stores/auth";
-import { computed, onMounted } from "vue";
+import { watchEffect, ref, computed } from "vue";
 
 const authStore = useAuthStore();
-
-import { watchEffect, ref } from "vue";
-
-const username = ref("Guest");
+const username = ref("G");
 
 watchEffect(() => {
-  username.value = authStore.user?.email || "Guest";
+  const email = authStore.user?.email || "Guest";
+  username.value = email.charAt(0).toUpperCase(); // Get the first letter and ensure it's uppercase
 });
-
 </script>
 
 <template>
-  <div class=''>
-      {{ username }}
+  <div>
+    {{ username }}
   </div>
 </template>
-  

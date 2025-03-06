@@ -5,6 +5,10 @@
       <Title>TAZAMA AI DJ</Title>
     </Head>
 
+
+
+{{ username }}
+
     <nav
       class="bg-gradient-to-r opacity-1 from-white to-yellow-500 via-white  fixed w-full z-20 top-0 start-0 border-b border-gray-200 ">
       <div class="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto lg:p-4 p-2">
@@ -328,7 +332,7 @@ import { onMounted, ref, watchEffect } from "vue";
 
 const authStore = useAuthStore();
 const router = useRouter();
-const username = ref("Guest");
+const username = ref(["Guest"]);
 
 // Ensure auth data is loaded on refresh
 onMounted(() => {

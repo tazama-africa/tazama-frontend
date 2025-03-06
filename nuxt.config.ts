@@ -55,6 +55,7 @@ export default defineNuxtConfig({
   image: {
     // Image optimization options
   },
+  devtools: { enabled: false },
   // pwa: {
   //   manifest: {
   //     name: "Smart One",
