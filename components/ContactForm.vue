@@ -1,6 +1,6 @@
 <template>
     <div
-      class="py-40 px-2 w-full lg:h-screen h-auto flex flex-col items-center bg-gradient-to-l from-yellow-50 to-yellow-400 via-yellow-400 lg:justify-center lg:py-20 lg:mb-0 mb-0"
+      class="py-40 px-2 w-full lg:h-screen h-auto flex flex-col items-center bg-gradient-to-l from-yellow-50 to-yellow-400 via-yellow-400 lg:justify-center lg:py-20 lg:pt-40 lg:mb-0 mb-0"
     >
       <div class="carousel-slide h-20 w-full flex-shrink-0">
        

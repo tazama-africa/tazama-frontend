@@ -2,9 +2,9 @@
     <div class="flex justify-between flex-col items-center h-screen">
         <div></div>
         <form @submit.prevent="handleLogin"
-            class="lg:w-[25%] w-[100%] flex flex-col justify-between mx-auto lg:bg-white px-6 lg:px-8 py-10 pt-5 lg:border lg:shadow-xl rounded-xl">
+            class="lg:w-[30%] w-[100%] flex flex-col justify-between mx-auto lg:bg-white px-6 lg:px-8 lg:py-4 py-10 pt-5 lg:border lg:shadow-xl rounded-xl">
             <div v-if="step === 1">
-                <div class="flex items-center text-2xl font-bold my-10 mb-3 justify-center">
+                <div class="flex items-center text-2xl font-bold lg:mb-1 my-10 lg:my-4 mb-3 justify-center">
                     <NuxtImg src="/logo-long-t.png" class="lg:w-[60%] w-[80%] h-32 object-cover" />
                 </div>
                 <div class="text-center">
@@ -16,7 +16,7 @@
 
                 <div>
                     <ol
-                        class="flex items-center  justify-center  bg-white  p-3 space-x-2 text-sm font-medium text-center text-gray-500 bg-white  rounded-lg shadow-sm  sm:p-4 sm:space-x-4 rtl:space-x-reverse">
+                        class="flex items-center  justify-center  bg-white lg:py-1  p-3 space-x-2 text-sm font-medium text-center text-gray-500  rounded-lg shadow-sm  sm:p-4 sm:space-x-4 rtl:space-x-reverse">
                         <li @click="step = 1"
                             class="flex hover:text-orange-400 items-center text-orange-600 dark:text-orange-500">
                             <span

@@ -6,13 +6,13 @@
       </Head>
   
       <nav
-        class="bg-gradient-to-r opacity-1 from-white to-yellow-500 via-white  fixed w-full z-20 top-0 start-0 border-b border-gray-200 ">
-        <div class="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto lg:p-4 p-2">
+        class="bg-gradient-to-r opacity-1 from-white to-yellow-500 via-white lg:px-20  fixed w-full z-20 top-0 start-0 border-b border-gray-200 ">
+        <div class="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto lg:p-1  p-2">
           <nuxt-link to="/" class="flex items-center lg:space-x-3 rtl:space-x-reverse">
-            <!-- <NuxtImg src="/logo.png" class="lg:w-[80%] h-12 object-cover" /> -->
-            <span class="self-center font-semibold whitespace-nowrap gradient-text text-xl text-yellow-600">
+            <NuxtImg src="/logo-long-t.png" class="lg:w-[80%] h-12 lg:h-20 object-cover" />
+            <!-- <span class="self-center font-semibold whitespace-nowrap gradient-text text-xl text-yellow-600">
               Tazama
-            </span>
+            </span> -->
           </nuxt-link>
           <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
             <nuxt-link to="/accounts/login"

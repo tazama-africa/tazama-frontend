@@ -2,17 +2,17 @@
     <div>
 
         <Head>
-            <Title>ABOUT - TAZAMA</Title>
+            <Title>Contact Us - TAZAMA</Title>
         </Head>
 
         <nav
-            class="bg-gradient-to-r opacity-1 from-white to-yellow-500 via-white  fixed w-full z-20 top-0 start-0 border-b border-gray-200 ">
-            <div class="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto lg:p-4 p-2">
+            class="bg-gradient-to-r lg:px-20 mx-au opacity-1 lg:mb-20 from-white to-yellow-500 via-white  fixed w-full z-20 top-0 start-0 border-b border-gray-200 ">
+            <div class="max-w-screen-2xl flex flex-wrap items-center justify-between mx-auto lg:p-1 p-2">
                 <nuxt-link to="/" class="flex items-center lg:space-x-3 rtl:space-x-reverse">
-                    <!-- <NuxtImg src="/logo.png" class="lg:w-[80%] h-12 object-cover" /> -->
-                    <span class="self-center font-semibold whitespace-nowrap gradient-text text-xl text-yellow-600">
+                    <NuxtImg src="/logo-long-t.png" class="lg:w-[80%] h-12 lg:h-20 object-cover" />
+                    <!-- <span class="self-center font-semibold whitespace-nowrap gradient-text text-xl text-yellow-600">
                         Tazama
-                    </span>
+                    </span> -->
                 </nuxt-link>
                 <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                     <nuxt-link to="/accounts/login"
@@ -44,11 +44,11 @@
                     <ul
                         class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
                         <li>
-                <nuxt-link to="/"
-                  class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-yellow-700 md:p-0">
-                  Home
-                </nuxt-link>
-              </li>
+                            <nuxt-link to="/"
+                                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-yellow-700 md:p-0">
+                                Home
+                            </nuxt-link>
+                        </li>
 
                         <li>
                             <nuxt-link to="/about"
@@ -66,11 +66,13 @@
                 </div>
             </div>
         </nav>
+
+        <br><br><br>
         <!-- end features -->
         <!-- advertisers -->
         <ContactForm />
         <!-- end form -->
-        <footer class="bg-gradient-to-r from-yellow-700 lg:rounded lg:mt-0  to-red-600 via-yellow-600">
+        <footer class="bg-gradient-to-r from-yellow-700 lg:rounded lg:mt-0   to-red-600 via-yellow-600">
             <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
                 <div class="md:flex md:justify-between">
                     <div class="mb-6 md:mb-0">

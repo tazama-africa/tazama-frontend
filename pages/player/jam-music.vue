@@ -64,6 +64,28 @@
             </div>
         </div>
         <div>
+            <div class="lg:px-4 mx-1">
+                <div>
+                    <div class="flex pl-1 lg:flex-wrap justify-center pb-2 gap-3 mt-4 overflow-x-auto max-h-40 ">
+                        <div v-for="(genre, index) in genredata" :key="index"
+                            class="flex items-center text-gray-500 text-xs border border-gray-400 rounded-full py-1 px-3 cursor-pointer transition-all duration-300 min-w-max">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4" viewBox="0 0 24 24">
+                                    <g fill="none" stroke="currentColor" stroke-width="1.5">
+                                        <path d="M12.25 2.75a9.5 9.5 0 1 1 0 19a9.5 9.5 0 0 1 0-19Z" />
+                                        <path d="M14.62 12.25a2.37 2.37 0 1 0-4.74 0a2.37 2.37 0 0 0 4.74 0Z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M12.25 18.93a6.7 6.7 0 0 1-5.24-2.53m7.24-10.53a6.69 6.69 0 0 1 4.4 4.48" />
+                                    </g>
+                                </svg>
+                                {{ genre.genre__title }} . {{ genre.count }}
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- <SuggestedGenres /> -->
             <ConnectSessionTable />
         </div>
         <div class="lg:px-4 px-0 p-0  mt-10">
@@ -89,9 +111,14 @@
 <script setup>
 import { useAuthStore } from "@/stores/auth";
 import { onMounted } from "vue";
+import { storeToRefs } from "pinia";
+import { usePlayerStore } from "@/stores/playerdata";
+
 
 // Load user data when the dashboard mounts
 const authStore = useAuthStore();
+const playerStore = usePlayerStore();
+const { genredata } = storeToRefs(playerStore);
 
 import { watchEffect, ref } from "vue";
 
@@ -100,6 +127,12 @@ const username = ref("Guest");
 watchEffect(() => {
     username.value = authStore.user?.username || "Guest";
 });
+
+
+onMounted(async () => {
+    await playerStore.postPlayerData();
+});
+console.log(playerStore.genredata)
 
 
 // Define the page layout

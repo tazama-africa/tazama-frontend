@@ -2,7 +2,7 @@
     <div class="flex justify-between flex-col items-center h-screen">
         <div></div>
         <form @submit.prevent="handleLogin"
-            class="lg:w-[25%] w-[100%] flex flex-col justify-between mx-auto lg:bg-white px-6 lg:px-8 py-10 pt-5 lg:border lg:shadow-xl rounded-xl">
+            class="lg:w-[30%] w-[100%] flex flex-col justify-between mx-auto lg:bg-white px-6 lg:px-8 py-10 lg:py-2 pt-5 lg:border lg:shadow-xl rounded-xl">
             <div>
                 <div class="flex items-center text-2xl font-bold my-10 justify-center">
                     <NuxtImg src="/logo-block-t.png" class="lg:w-[60%] w-[80%] h-32 object-cover" />
