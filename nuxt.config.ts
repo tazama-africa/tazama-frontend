@@ -14,7 +14,7 @@ const EnvConfigs: {
     env: "local",
   },
   staging: {
-    apiEndPoint: "https://backendats.kaziquest.com/api",
+    apiEndPoint: "https://tazama.africa/api",
     paypalClientId:
       "AScIXetQlA8kASMe7yW0aOHbOSalPCs_ILSylSudOlPFDkNVrUZizzwoi4O01eN_QMptiZ9cySRzlI5g",
     env: "staging",
@@ -27,7 +27,7 @@ const EnvConfigs: {
   },
 };
 
-let appEnv = process.env.APP_ENV || "development";
+let appEnv = process.env.APP_ENV || "staging";
 export default defineNuxtConfig({
   app: {
     baseURL: "/", // Ensure this is correctly set
