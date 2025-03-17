@@ -50,7 +50,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="text-white  w-full py-5 text-lg rounded-lg  transition-colors duration-300">
+                        <!-- <div class="text-white  w-full py-5 text-lg rounded-lg  transition-colors duration-300">
                             <div class="flex items-start px-2 -mt-4">
 
                                 <a a href="" target="blank"
@@ -58,7 +58,7 @@
                                     Play Video Mix
                                 </a>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -85,6 +85,7 @@
 
                 </div>
             </div>
+            <!-- <TestSongList /> -->
             <!-- <SuggestedGenres /> -->
             <ConnectSessionTable />
         </div>
@@ -123,6 +124,7 @@ const { genredata } = storeToRefs(playerStore);
 import { watchEffect, ref } from "vue";
 
 const username = ref("Guest");
+const playlist = ref([])
 
 watchEffect(() => {
     username.value = authStore.user?.username || "Guest";
