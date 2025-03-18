@@ -50,15 +50,23 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="text-white  w-full py-5 text-lg rounded-lg  transition-colors duration-300">
+                        <div class="text-white flex w-full pt-5 text-lg rounded-lg  transition-colors duration-300">
+
                             <div class="flex items-start px-2 -mt-4">
 
                                 <a a href="" target="blank"
-                                    class="text-xs hover:bg-red-600 hover:text-white   ml-2 px-3 lg:px-10 py-2 border rounded-full text-green-50">
-                                    Play Video Mix
+                                    class="text-xs hover:bg-red-600 hover:text-white  bg-green-600  ml-2 px-3 lg:px-10 py-2 border border-green-800 rounded-full text-green-50">
+                                    Pay Fare
                                 </a>
                             </div>
-                        </div> -->
+                            <div class="flex items-start  -mt-4">
+
+                                <a a href="" target="blank"
+                                    class="text-xs hover:bg-red-600 hover:text-white   ml-2 px-3 lg:px-10 py-2 border rounded-full text-green-50">
+                                    Report Vehicle
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -66,9 +74,10 @@
         <div>
             <div class="lg:px-4 mx-1">
                 <div>
-                    <div class="flex pl-1 lg:flex-wrap justify-center pb-2 gap-3 mt-4 overflow-x-auto max-h-40 ">
+                    <div class="flex pl-1 lg:flex-wrap pb-2 gap-3 mt-4 overflow-x-auto max-h-40"
+                        style="scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;">
                         <div v-for="(genre, index) in genredata" :key="index"
-                            class="flex items-center text-gray-500 text-xs border border-gray-400 rounded-full py-1 px-3 cursor-pointer transition-all duration-300 min-w-max">
+                            class="flex items-center text-gray-500 text-xs border border-gray-400 rounded-full py-1 px-3 cursor-pointer transition-all duration-300 min-w-max scroll-snap-align-start">
                             <label class="flex items-center gap-2 cursor-pointer">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4" viewBox="0 0 24 24">
                                     <g fill="none" stroke="currentColor" stroke-width="1.5">
@@ -82,9 +91,9 @@
                             </label>
                         </div>
                     </div>
-
                 </div>
             </div>
+
             <!-- <TestSongList /> -->
             <!-- <SuggestedGenres /> -->
             <ConnectSessionTable />

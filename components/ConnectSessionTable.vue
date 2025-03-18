@@ -7,7 +7,7 @@ const UBadge = resolveComponent("UBadge");
 const playlist = ref([]);
 const globalFilter = ref(""); // Search input model
 const listenerCount = ref(0);
-const sessionId = "1234"; // Replace with actual session ID
+const sessionId = "3000"; // Replace with actual session ID
 let ws = null;
 
 const likedSongs = ref(new Set());
@@ -57,17 +57,27 @@ const filteredPlaylist = computed(() => {
   );
 });
 
+// const columns = [
+//   { key: "title", label: "Song" },
+//   { key: "artist", label: "Artist" },
+//   { key: "genre", label: "Genre" },
+//   { key: "options", label: "Actions", class: "text-center" }
+// ];
+
+
 const columns = [
-  { key: "title", label: "Song" },
-  { key: "artist", label: "Artist" },
-  { key: "genre", label: "Genre" },
-  { key: "options", label: "Actions", class: "text-center" }
+  // { key: 'id', label: '#', class: 'w-10 text-right ' }, // Always visible
+  { key: 'title', label: 'Song', class: 'pl-4' }, // Always visible
+  { key: 'artist', label: 'Artist', class: 'hidden lg:table-cell' }, // Hidden on small screens
+  { key: "genre", label: "Genre", class: 'hidden lg:table-cell text-left' }, // Hidden on small screens
+  { key: 'options', label: 'Options', class: 'text-center hidden  lg:table-cell text-left' } // Always visible
 ];
+
 </script>
 
 <template>
   <div class="flex flex-col overflow-auto overflow-x-hidden lg:p-5 pb-10">
-    <div class="flex items-center lg:px-2 px-2 justify-between py-3">
+    <div class="flex flex-col lg:flex-row gap-2 w-full lg:items-center lg:px-2 px-2 justify-between py-3">
       <div class="font-small gap-2 flex flex-row items-center">
         <div class="flex items-center gap-2">
           <div class="flex justify-center items-center">
@@ -92,26 +102,27 @@ const columns = [
           <div class="lg:text-lg font-bold text-xs text-orange-600">Songs</div>
         </div>
         <div class="flex gap-1">
-            <UAvatarGroup max="1">
-              <UAvatar src="https://github.com/benjamincanac.png" alt="Benjamin Canac" />
-            </UAvatarGroup> 
-            <div class="flex items-center">
-              <p class="text-xs"> + {{ listenerCount }}</p>
-            </div>         
+          <UAvatarGroup max="1">
+            <UAvatar src="https://github.com/benjamincanac.png" alt="Benjamin Canac" />
+          </UAvatarGroup>
+          <div class="flex items-center">
+            <p class="text-xs"> + {{ listenerCount }}</p>
+          </div>
         </div>
       </div>
       <div class="flex">
-        <UInput v-model="globalFilter" placeholder="Search song..." class="w-64" />
+        <UInput v-model="globalFilter" icon="i-lucide-search" size="md"  class="lg:w-64 w-full"
+          placeholder="Search..." />
       </div>
     </div>
 
 
     <UTable :rows="filteredPlaylist" :columns="columns" hover>
       <template #title-data="{ row }">
-        <div class="flex items-center lg:space-x-3 space-x-2 lg:w-full w-48">
+        <div class="flex items-center lg:space-x-3 space-x-2 lg:w-full w-40">
           <div class="w-1/4 lg:w-auto">
             <img :src="row.cover || 'https://hub.yamaha.com/wp-content/uploads/2021/09/How-vinyl-made-Fig.-2.jpg'"
-              alt="Cover" class="w-10 h-10 rounded-md object-cover" />
+              alt="Cover" class="lg:w-10 lg:h-10 w-7 h-7 rounded-md object-cover" />
           </div>
           <div class="w-3/4 lg:w-auto">
             <span class="font-medium truncate max-w-xs">{{ row.title }}</span>
@@ -122,6 +133,9 @@ const columns = [
 
       <template #artist-data="{ row }">
         <span class="truncate max-w-xs hidden md:block">{{ row.artist }}</span>
+      </template>
+      <template #genre-data="{ row }">
+        <span class="truncate max-w-xs hidden md:block">{{ row.genre }}</span>
       </template>
 
       <template #options-data="{ row }">
