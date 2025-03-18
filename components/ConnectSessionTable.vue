@@ -17,9 +17,14 @@ onMounted(() => {
     connectWebSocket();
   }
 });
-
 const connectWebSocket = () => {
-  ws = new WebSocket(`ws://127.0.0.1:8000/ws/session/${sessionId}/`);
+  // Extract player number from the URL (e.g., http://localhost:3000/player/2025)
+  const playerNo = window.location.pathname.split('/player/')[1] || 'default'; // Fallback to 'default' if not found
+  const sessionId = playerNo; // Use playerNo as the sessionId
+
+  // ws = new WebSocket(`ws://127.0.0.1:8000/ws/session/${sessionId}/`);
+
+  ws = new WebSocket(`wss://tazama.africa/ws/session/${sessionId}/`);
 
   ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
@@ -37,6 +42,8 @@ const connectWebSocket = () => {
   };
 };
 
+// Call the function when the page loads
+// connectWebSocket();
 const toggleLike = (songId) => {
   if (likedSongs.value.has(songId)) {
     likedSongs.value.delete(songId);

@@ -49,7 +49,7 @@ export const usePlayerStore = defineStore("player", {
     async postPlayerData(playerNo) {
       try {
         console.log(playerNo, "player No");
-        navigateTo("/player/jam-music");
+        navigateTo(`/player/${playerNo}`);
         Toast.fire({
           icon: "success",
           title: "Connected to test Jam! Like and suggest songs. Enjoy!",
