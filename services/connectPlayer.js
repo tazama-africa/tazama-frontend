@@ -65,3 +65,13 @@ export async function getPlaylistService(playerId) {
 }
 
 
+
+async function getGenre() {
+  const API_URL = useRuntimeConfig().public.apiBase;
+  
+  return await $fetch(API_URL + "/active-genres/", {
+      method: "GET",
+      headers: authHeader(),
+  });
+}
+

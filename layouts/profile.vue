@@ -1,7 +1,7 @@
 <template>
 
     <Head>
-        <Title>Tazama - Dashboard</Title>
+        <Title>Tazama - Profile</Title>
     </Head>
 
     <div class="flex lg:bg-slate-100 lg:gap-10 gap-4 h-screen overflow-y-hidden">
@@ -14,7 +14,7 @@
                 <div class="flex pl-5 gap-1">
                     <div class="flex gap-2 items-center">
                         <!-- <NuxtImg src="/logo-long-1.png" class="lg:w-[80%] h-12 object-cover" /> -->
-                        <p class="text-gray-300 ">Dashboard</p>
+                        <p class="text-gray-300 ">Profile</p>
                     </div>
                 </div>
                 <!-- <div>

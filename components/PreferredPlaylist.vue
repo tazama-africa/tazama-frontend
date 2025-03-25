@@ -29,7 +29,7 @@ onMounted(() => {
                 class="playlist-item bg-transparent lg:p-2 rounded-lg hover:bg-orange-200 hover:shadow-orange-200 hover:shadow shadow-none">
                 <a :href="p.url" target="_blank" class="block">
                     <img v-if="p.image" :src="p.image" :alt="p.name" class="rounded-t-sm h-40   w-full object-cover" />
-                    <p class="mt-2 font-semibold text-gray-700 truncate text-left overflow-hidden whitespace-nowrap">
+                    <p class="mt-2 font-semibold text-gray-700   text-left overflow-hidden ">
                         {{ p.name }}
                     </p>
                 </a>

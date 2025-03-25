@@ -1,9 +1,12 @@
 <script setup>
 import { ref, computed, onMounted, resolveComponent } from "vue";
 import Swal from "sweetalert2";
+import { useMusicStore } from '@/stores/musicstore';
+import { storeToRefs } from "pinia";
 
 const UBadge = resolveComponent("UBadge");
 
+const musicStore = useMusicStore();
 const playlist = ref([]);
 const globalFilter = ref(""); // Search input model
 const listenerCount = ref(0);
@@ -22,9 +25,9 @@ const connectWebSocket = () => {
   const playerNo = window.location.pathname.split('/player/')[1] || 'default'; // Fallback to 'default' if not found
   const sessionId = playerNo; // Use playerNo as the sessionId
 
-  // ws = new WebSocket(`ws://127.0.0.1:8000/ws/session/${sessionId}/`);
+  ws = new WebSocket(`ws://127.0.0.1:8000/ws/session/${sessionId}/`);
 
-  ws = new WebSocket(`wss://tazama.africa/ws/session/${sessionId}/`);
+  // ws = new WebSocket(`wss://tazama.africa/ws/session/${sessionId}/`);
 
   ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
@@ -44,11 +47,17 @@ const connectWebSocket = () => {
 
 // Call the function when the page loads
 // connectWebSocket();
-const toggleLike = (songId) => {
+const toggleLike = async (songId) => {
   if (likedSongs.value.has(songId)) {
     likedSongs.value.delete(songId);
   } else {
     likedSongs.value.add(songId);
+    console.log(songId)
+    try {
+      await musicStore.likesong(songId); // Call the store action and await it
+    } catch (error) {
+      console.log(error)
+    }  // Call the store action and await it  
   }
 };
 
@@ -126,13 +135,13 @@ const columns = [
 
     <UTable :rows="filteredPlaylist" :columns="columns" hover>
       <template #title-data="{ row }">
-        <div class="flex items-center lg:space-x-3 space-x-2 lg:w-full w-40">
-          <div class="w-1/4 lg:w-auto">
+        <div class="flex items-center lg:space-x-3 space-x-2 lg:w-full w-56">
+          <div class="w-1/6 lg:w-auto">
             <img :src="row.cover || 'https://hub.yamaha.com/wp-content/uploads/2021/09/How-vinyl-made-Fig.-2.jpg'"
               alt="Cover" class="lg:w-10 lg:h-10 w-7 h-7 rounded-md object-cover" />
           </div>
-          <div class="w-3/4 lg:w-auto">
-            <span class="font-medium truncate max-w-xs">{{ row.title }}</span>
+          <div class="w-5/6 lg:w-auto">
+            <span class="font-medium truncate max-w-full whitespace-nowrap block">{{ row.title }}</span>
             <span class="truncate max-w-xs text-xs lg:hidden block">{{ row.artist }}</span>
           </div>
         </div>

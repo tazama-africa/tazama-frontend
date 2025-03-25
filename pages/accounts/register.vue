@@ -156,8 +156,7 @@
             <!-- music -->
             <div v-if="step === 2">
                 <div class="flex items-center text-2xl font-bold my-10 justify-center">
-                    <NuxtImg src="/logo-long.png" class="lg:w-[60%] w-[80%] h-32 object-cover hidden" />
-                    TAZAMA
+                    <NuxtImg src="/logo-long-t.png" class="lg:w-[60%] w-[80%] h-20 object-cover" />
                 </div>
 
                 <div class="text-center">
@@ -206,7 +205,7 @@
 
                 <!-- Genre Selection -->
                 <div class="flex flex-wrap justify-center gap-3 mt-4">
-                    <div v-for="genre in genres" :key="genre.id"
+                    <div v-for="genre in musicStore.genredata" :key="genre.id"
                         class="flex items-center text-gray-500 text-xs border border-gray-400 rounded-full p-2 px-4 cursor-pointer transition-all duration-300"
                         :class="{ 'bg-orange-500 text-white border-orange-600': selectedGenres.includes(genre.id) }">
                         <input type="checkbox" :id="'checkbox-' + genre.id" class="hidden" v-model="selectedGenres"
@@ -233,15 +232,8 @@
             <!-- Congrats -->
             <div v-if="step === 3">
                 <div class="flex items-center text-2xl font-bold my-10 justify-center">
-                    <NuxtImg src="/logo-long.png" class="lg:w-[60%] w-[80%] h-32 object-cover hidden" />
-                    TAZAMA
-                </div>
-                <div class="text-center">
-                    <h2 class="text-gray-800 text-2xl font-bold">Create Account</h2>
-                    <p class="text-xs border-b border-orange-200 w-full pb-2 mb-4">
-                        Connect with us in just a few seconds
-                    </p>
-                </div>
+                    <NuxtImg src="/logo-long-t.png" class="lg:w-[60%] w-[80%] h-20 object-cover" />
+                </div> 
 
                 <div>
                     <ol
@@ -314,21 +306,17 @@
 import { ref } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import Swal from "sweetalert2";
+import { useMusicStore } from '@/stores/musicstore';
 
+const musicStore = useMusicStore();
+onMounted(() => {
+  musicStore.getMusicData();
+});
 const step = ref(1);
 definePageMeta({
     layout: "accounts",
 });
 
-const genres = [
-    { id: 1, label: "Rock" },
-    { id: 2, label: "Pop" },
-    { id: 3, label: "Jazz" },
-    { id: 4, label: "Hip Hop" },
-    { id: 5, label: "Reggae" },
-    { id: 6, label: "Urban Tone" },
-    { id: 7, label: "Caribbean" },
-];
 
 const authStore = useAuthStore();
 const email = ref("");

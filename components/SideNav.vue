@@ -8,13 +8,8 @@
                     <li>
                         <NuxtLink to="/dashboard"
                             class="flex flex-col items-center justify-center p-2 gap-2 mb-10  cursor-pointer   rounded-lg text-orange-600 text-2xl group">
-                            <!-- <NuxtImg src="/logo-short.png" class="lg:h-48 w-[80%] h-20 object-cover" alt="main-logo" /> -->
-                            <div class="bg-orange-600 h-5 w-5 rounded-full ">
-                                
-                            </div>
-                            <p>
-                                Tazama
-                            </p>
+                            <NuxtImg src="/logo-block-t.png" class="lg:w-[60%] w-[80%] h-32 object-cover" />
+
                         </NuxtLink>
                     </li>                    
                 </ul>
