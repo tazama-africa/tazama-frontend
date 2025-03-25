@@ -25,9 +25,9 @@ const connectWebSocket = () => {
   const playerNo = window.location.pathname.split('/player/')[1] || 'default'; // Fallback to 'default' if not found
   const sessionId = playerNo; // Use playerNo as the sessionId
 
-  ws = new WebSocket(`ws://127.0.0.1:8000/ws/session/${sessionId}/`);
+  // ws = new WebSocket(`ws://127.0.0.1:8000/ws/session/${sessionId}/`);
 
-  // ws = new WebSocket(`wss://tazama.africa/ws/session/${sessionId}/`);
+  ws = new WebSocket(`wss://tazama.africa/ws/session/${sessionId}/`);
 
   ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
