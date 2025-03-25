@@ -57,7 +57,7 @@
   // Logout handler
   const handleLogout = () => {
     authStore.logout();
-    navigateTo("/login");
+    navigateTo("/accounts/login");
   };
   
   // Page layout

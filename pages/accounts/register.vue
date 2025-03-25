@@ -147,7 +147,7 @@
                 </div>
                 <p class="my-4 text-gray-500 text-xs">
                     Already have an account?
-                    <nuxt-link to="/accounts/login" class="text-orange-600 hover:text-green-400">
+                    <nuxt-link to="/accounts/login" class="text-orange-600 hover:text-blue-400">
                         login
                     </nuxt-link>
                 </p>
@@ -233,7 +233,7 @@
             <div v-if="step === 3">
                 <div class="flex items-center text-2xl font-bold my-10 justify-center">
                     <NuxtImg src="/logo-long-t.png" class="lg:w-[60%] w-[80%] h-20 object-cover" />
-                </div> 
+                </div>
 
                 <div>
                     <ol
@@ -285,10 +285,26 @@
                 </div>
 
                 <UButton block
-                    class="w-full  hover:bg-orange-200 hover:text-orange-600 bg-green-600 text-white   py-3  px-6 flex items-center  transition"
-                    type="submit">
-                    Finish
+                    class="w-full mt-4 hover:bg-orange-200 hover:text-orange-600 bg-blue-600 text-white py-3 px-6 flex items-center justify-center transition-all duration-300 ease-in-out disabled:opacity-75 disabled:cursor-not-allowed"
+                    type="submit" :disabled="isLoading">
+                    <span class="flex items-center">
+                        <svg v-if="isLoading" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                            </circle>
+                            <path class="opacity-75" fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                            </path>
+                        </svg>
+                        {{ isLoading ? 'Finishing...' : 'Finish' }}
+                    </span>
                 </UButton>
+
+                <!-- Error Display -->
+                <div v-if="errorMessage"
+                    class="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg text-sm">
+                    {{ errorMessage }}
+                </div>
 
             </div>
             <!-- congrats end -->
@@ -301,9 +317,8 @@
         </div>
     </div>
 </template>
-
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import Swal from "sweetalert2";
 import { useMusicStore } from '@/stores/musicstore';
@@ -312,11 +327,11 @@ const musicStore = useMusicStore();
 onMounted(() => {
   musicStore.getMusicData();
 });
+
 const step = ref(1);
 definePageMeta({
-    layout: "accounts",
+  layout: "accounts",
 });
-
 
 const authStore = useAuthStore();
 const email = ref("");
@@ -325,31 +340,51 @@ const password = ref("");
 const phone = ref("");
 const errorMessage = ref("");
 const selectedGenres = ref([]);
+const isLoading = ref(false); // Added loading state
 
 // Toggle genre selection (store genre label instead of ID)
 const toggleGenre = (genre) => {
-    const genreIndex = selectedGenres.value.findIndex((g) => g === genre.label);
+  const genreIndex = selectedGenres.value.findIndex((g) => g === genre.label);
 
-    if (genreIndex !== -1) {
-        selectedGenres.value.splice(genreIndex, 1); // Remove if already selected
-    } else {
-        selectedGenres.value.push(genre.label); // Add new selection
-    }
+  if (genreIndex !== -1) {
+    selectedGenres.value.splice(genreIndex, 1); // Remove if already selected
+  } else {
+    selectedGenres.value.push(genre.label); // Add new selection
+  }
 };
 
 const handleLogin = async () => {
-    errorMessage.value = ""; // Clear previous errors
-    console.log("Selected Genres:", selectedGenres.value);
+  if (isLoading.value) return; // Prevent multiple clicks
 
-    if (!email.value || !password.value) {
-        console.log("Enter email and password");
-        return;
-    }
+  errorMessage.value = ""; // Clear previous errors
+  isLoading.value = true; // Start loading
+  console.log("Selected Genres:", selectedGenres.value);
 
-    try {
-        await authStore.registerUser(email.value, phone.value, password.value, selectedGenres.value);
-    } catch (error) {
-        errorMessage.value = error.message || "Registration failed. Please try again.";
-    }
+  if (!email.value || !password.value) {
+    errorMessage.value = "Please enter both email and password.";
+    isLoading.value = false;
+    return;
+  }
+
+  try {
+    await authStore.registerUser(email.value, phone.value, password.value, selectedGenres.value);
+    Swal.fire({
+      icon: 'success',
+      title: 'Registration Complete!',
+      showConfirmButton: false,
+      timer: 1500
+    });
+    // Optionally redirect after success
+    // navigateTo('/dashboard');
+  } catch (error) {
+    errorMessage.value = error.message || "Registration failed. Please try again.";
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: errorMessage.value,
+    });
+  } finally {
+    isLoading.value = false; // Stop loading
+  }
 };
 </script>
