@@ -32,3 +32,14 @@ async function likesongService(songId) {
 }
 
 
+async function suggestSongService(songId, playerNo) {
+  const API_URL = useRuntimeConfig().public.apiBase;
+  return await $fetch(API_URL + "/suggest/song/", {
+      method: 'POST',
+      headers: authHeader(),  
+      body: {songId, playerNo},
+
+  });
+}
+
+

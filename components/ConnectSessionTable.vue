@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted, resolveComponent } from "vue";
+import { ref, computed, onMounted, resolveComponent, watch } from "vue";
 import Swal from "sweetalert2";
 import { useMusicStore } from '@/stores/musicstore';
 import { storeToRefs } from "pinia";
@@ -8,26 +8,75 @@ const UBadge = resolveComponent("UBadge");
 
 const musicStore = useMusicStore();
 const playlist = ref([]);
-const globalFilter = ref(""); // Search input model
+const globalFilter = ref("");
+const searchResults = ref([]); // New ref for API search results
 const listenerCount = ref(0);
-const sessionId = "3000"; // Replace with actual session ID
+const sessionId = "3000";
 let ws = null;
+const isSearching = ref(false); // To track if we're showing search results
 
 const likedSongs = ref(new Set());
+
+// Debounce function to limit API calls
+const debounce = (func, wait) => {
+  let timeout;
+  return (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), wait);
+  };
+};
+
+// Function to fetch search results from API
+const searchSongs = async (query) => {
+  if (!query.trim()) {
+    isSearching.value = false;
+    searchResults.value = [];
+    return;
+  }
+
+  try {
+    isSearching.value = true;
+    const response = await fetch(`http://127.0.0.1:8000/api/search/song/?q=${encodeURIComponent(query)}`);
+    const data = await response.json();
+    if (data.status === "success") {
+      // Map the API response to match our playlist format
+      searchResults.value = data.data.tracks.map(track => ({
+        id: track.id,
+        title: track.name,
+        artist: track.artists.join(", "),
+        genre: track.genre,
+        cover: track.image,
+        duration_ms: track.duration_ms,
+        popularity: track.popularity
+      }));
+    }
+  } catch (error) {
+    console.error("Error fetching search results:", error);
+    isSearching.value = false;
+    searchResults.value = [];
+  }
+};
+
+// Debounced version of searchSongs
+const debouncedSearch = debounce(searchSongs, 300);
+
+// Watch for changes in globalFilter
+watch(globalFilter, (newValue) => {
+  debouncedSearch(newValue);
+});
 
 onMounted(() => {
   if (process.client) {
     connectWebSocket();
   }
 });
+
+// Rest of your existing WebSocket code remains the same
 const connectWebSocket = () => {
-  // Extract player number from the URL (e.g., http://localhost:3000/player/2025)
-  const playerNo = window.location.pathname.split('/player/')[1] || 'default'; // Fallback to 'default' if not found
-  const sessionId = playerNo; // Use playerNo as the sessionId
+  const playerNo = window.location.pathname.split('/player/')[1] || 'default';
+  const sessionId = playerNo;
 
-  // ws = new WebSocket(`ws://127.0.0.1:8000/ws/session/${sessionId}/`);
-
-  ws = new WebSocket(`wss://tazama.africa/ws/session/${sessionId}/`);
+  ws = new WebSocket(`ws://127.0.0.1:8000/ws/session/${sessionId}/`);
 
   ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
@@ -45,27 +94,48 @@ const connectWebSocket = () => {
   };
 };
 
-// Call the function when the page loads
-// connectWebSocket();
 const toggleLike = async (songId) => {
+  
   if (likedSongs.value.has(songId)) {
     likedSongs.value.delete(songId);
   } else {
     likedSongs.value.add(songId);
-    console.log(songId)
     try {
-      await musicStore.likesong(songId); // Call the store action and await it
+      await musicStore.likesong(songId);
     } catch (error) {
-      console.log(error)
-    }  // Call the store action and await it  
+      console.log(error);
+    }
   }
 };
 
-// Computed property to filter playlist
+const SuggestSong = async (songId) => {
+  const playerNo = window.location.pathname.split('/player/')[1] || 'default';
+  const sessionId = playerNo;
+
+
+  if (likedSongs.value.has(songId)) {
+    likedSongs.value.delete(songId);
+  } else {
+    likedSongs.value.add(songId);
+    console.log(sessionId)
+    try {
+      // await musicStore.likesong(songId);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+};
+
+// Modified filteredPlaylist to use search results when available
 const filteredPlaylist = computed(() => {
+  if (isSearching.value && searchResults.value.length > 0) {
+    return searchResults.value;
+  }
+
   if (!globalFilter.value) {
     return playlist.value;
   }
+
   return playlist.value.filter((song) =>
     song.title.toLowerCase().includes(globalFilter.value.toLowerCase()) ||
     song.artist.toLowerCase().includes(globalFilter.value.toLowerCase()) ||
@@ -73,23 +143,15 @@ const filteredPlaylist = computed(() => {
   );
 });
 
-// const columns = [
-//   { key: "title", label: "Song" },
-//   { key: "artist", label: "Artist" },
-//   { key: "genre", label: "Genre" },
-//   { key: "options", label: "Actions", class: "text-center" }
-// ];
-
-
 const columns = [
-  // { key: 'id', label: '#', class: 'w-10 text-right ' }, // Always visible
-  { key: 'title', label: 'Song', class: 'pl-4' }, // Always visible
-  { key: 'artist', label: 'Artist', class: 'hidden lg:table-cell' }, // Hidden on small screens
-  { key: "genre", label: "Genre", class: 'hidden lg:table-cell text-left' }, // Hidden on small screens
-  { key: 'options', label: 'Options', class: 'text-center hidden  lg:table-cell text-left' } // Always visible
+  { key: 'title', label: 'Song', class: 'pl-4' },
+  { key: 'artist', label: 'Artist', class: 'hidden lg:table-cell' },
+  { key: "genre", label: "Genre", class: 'hidden lg:table-cell text-left' },
+  { key: 'options', label: 'Options', class: 'text-center hidden lg:table-cell text-left' }
 ];
-
 </script>
+
+
 
 <template>
   <div class="flex flex-col overflow-auto overflow-x-hidden lg:p-5 pb-10">
@@ -127,7 +189,7 @@ const columns = [
         </div>
       </div>
       <div class="flex">
-        <UInput v-model="globalFilter" icon="i-lucide-search" size="md"  class="lg:w-64 w-full"
+        <UInput v-model="globalFilter" icon="i-lucide-search" size="md" class="lg:w-64 w-full"
           placeholder="Search..." />
       </div>
     </div>
@@ -155,18 +217,37 @@ const columns = [
       </template>
 
       <template #options-data="{ row }">
-        <div class="flex items-center justify-center space-x-3">
-          <button @click="toggleLike(row.id)" class="focus:outline-none transition-colors duration-200">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-              :fill="likedSongs.has(row.id) ? 'orange' : 'none'"
-              :stroke="likedSongs.has(row.id) ? 'orange' : 'currentColor'" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" class="transition-colors duration-200">
-              <path
-                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-              </path>
-            </svg>
-          </button>
+        <div v-if="row.status">
+          <div class="flex items-center justify-center space-x-3">
+            <button @click="toggleLike(row.id)" class="focus:outline-none transition-colors duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                :fill="likedSongs.has(row.id) ? 'orange' : 'none'"
+                :stroke="likedSongs.has(row.id) ? 'orange' : 'currentColor'" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" class="transition-colors duration-200">
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                </path>
+              </svg>
+            </button>
+          </div>
         </div>
+        <div v-else>
+          <div class="flex items-center justify-center space-x-3">
+            <button @click="SuggestSong(row.id)" class="focus:outline-none transition-colors duration-200">
+             
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                :fill="likedSongs.has(row.id) ? 'orange' : 'none'"
+                :stroke="likedSongs.has(row.id) ? 'orange' : 'currentColor'" >
+                <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
+                  <path
+                    d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12m10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16" />
+                  <path d="M13 7a1 1 0 1 0-2 0v4H7a1 1 0 1 0 0 2h4v4a1 1 0 1 0 2 0v-4h4a1 1 0 1 0 0-2h-4z" />
+                </g>
+              </svg>
+            </button>
+          </div>
+        </div>
+
       </template>
     </UTable>
   </div>

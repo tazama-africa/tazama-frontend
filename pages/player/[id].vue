@@ -171,7 +171,7 @@ const open = ref(false)
 const username = ref("Guest");
 const playlist = ref([])
 
-const vehicleNumber = ref('+254712345678');
+const vehicleNumber = ref('0712345678');
 
 const copyNumber = async () => {
     try {
