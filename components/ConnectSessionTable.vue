@@ -95,7 +95,7 @@ const connectWebSocket = () => {
 };
 
 const toggleLike = async (songId) => {
-  
+
   if (likedSongs.value.has(songId)) {
     likedSongs.value.delete(songId);
   } else {
@@ -107,25 +107,57 @@ const toggleLike = async (songId) => {
     }
   }
 };
-
 const SuggestSong = async (songId) => {
   const playerNo = window.location.pathname.split('/player/')[1] || 'default';
   const sessionId = playerNo;
+  console.log(songId, sessionId);
 
+  // Create WebSocket connection
+  let ws = new WebSocket(`ws://127.0.0.1:8000/ws/session/${sessionId}/`);
 
-  if (likedSongs.value.has(songId)) {
-    likedSongs.value.delete(songId);
-  } else {
-    likedSongs.value.add(songId);
-    console.log(sessionId)
-    try {
-      // await musicStore.likesong(songId);
-    } catch (error) {
-      console.log(error);
+  // Set up message handler
+  ws.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+    if (data.playlist) {
+      playlist.value = data.playlist;
     }
+    if (data.listener_count !== undefined) {
+      listenerCount.value = data.listener_count;
+    }
+  };
+
+  try {
+    await musicStore.suggestsong(songId, sessionId);
+    globalFilter.value = ("")
+    
+    // Disconnect the WebSocket
+    ws.close();
+    
+    // Reconnect after a short delay
+    setTimeout(() => {
+      ws = new WebSocket(`ws://127.0.0.1:8000/ws/session/${sessionId}/`);
+      
+      // Reattach message handler for the new connection
+      ws.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        if (data.playlist) {
+          playlist.value = data.playlist;
+        }
+        if (data.listener_count !== undefined) {
+          listenerCount.value = data.listener_count;
+        }
+      };
+      
+      ws.onclose = () => {
+        console.log("WebSocket disconnected");
+      };
+    }, 1000); // 1 second delay before reconnecting
+    
+  } catch (error) {
+    console.log(error);
+    ws.close(); // Ensure socket is closed on error
   }
 };
-
 // Modified filteredPlaylist to use search results when available
 const filteredPlaylist = computed(() => {
   if (isSearching.value && searchResults.value.length > 0) {
@@ -203,7 +235,7 @@ const columns = [
               alt="Cover" class="lg:w-10 lg:h-10 w-7 h-7 rounded-md object-cover" />
           </div>
           <div class="w-5/6 lg:w-auto">
-            <span class="font-medium truncate max-w-full whitespace-nowrap block">{{ row.title }}</span>
+            <span class="font-medium truncate lg:w-60 max-w-full whitespace-nowrap block">{{ row.title }}</span>
             <span class="truncate max-w-xs text-xs lg:hidden block">{{ row.artist }}</span>
           </div>
         </div>
@@ -234,10 +266,10 @@ const columns = [
         <div v-else>
           <div class="flex items-center justify-center space-x-3">
             <button @click="SuggestSong(row.id)" class="focus:outline-none transition-colors duration-200">
-             
+
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                 :fill="likedSongs.has(row.id) ? 'orange' : 'none'"
-                :stroke="likedSongs.has(row.id) ? 'orange' : 'currentColor'" >
+                :stroke="likedSongs.has(row.id) ? 'orange' : 'currentColor'">
                 <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
                   <path
                     d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12m10-8a8 8 0 1 0 0 16a8 8 0 0 0 0-16" />

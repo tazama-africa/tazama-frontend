@@ -9,7 +9,8 @@ export const requestOptions = {
 
 export const musicService = {
   getGenreService,
-  likesongService
+  likesongService,
+  suggestSongService,
 };
 
 
@@ -32,13 +33,12 @@ async function likesongService(songId) {
 }
 
 
-async function suggestSongService(songId, playerNo) {
+async function suggestSongService(song_id, player_no) {
   const API_URL = useRuntimeConfig().public.apiBase;
   return await $fetch(API_URL + "/suggest/song/", {
       method: 'POST',
       headers: authHeader(),  
-      body: {songId, playerNo},
-
+      body: {song_id, player_no},
   });
 }
 

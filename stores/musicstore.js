@@ -63,6 +63,22 @@ export const useMusicStore = defineStore("music", {
         // Remove from likedSongs if the API call fails
         // this.likedSongs.delete(songId);
       }
+    },
+    async suggestsong(songId, playerNo) {
+      try {
+        const suggestsong = await musicService.suggestSongService(songId, playerNo);
+        console.log(`Song ${songId} suggested`);
+        Toast.fire({
+          icon: "success",
+          title: "Song added to queue",
+        });
+      } catch (error) {
+        this.error = "Failed to suggest song";
+        Toast.fire({
+          icon: "error",
+          title: "Failed to  song",
+        });
+      }
     }
   },
 });
