@@ -115,7 +115,9 @@ const SuggestSong = async (songId) => {
   console.log(songId, sessionId);
 
   // Create WebSocket connection
-  let ws = new WebSocket(`ws://127.0.0.1:8000/ws/session/${sessionId}/`);
+  // let ws = new WebSocket(`ws://127.0.0.1:8000/ws/session/${sessionId}/`);
+
+  let ws = new WebSocket(`wss://tazama.africa/ws/session/${sessionId}/`);
 
   // Set up message handler
   ws.onmessage = (event) => {
@@ -137,7 +139,8 @@ const SuggestSong = async (songId) => {
     
     // Reconnect after a short delay
     setTimeout(() => {
-      ws = new WebSocket(`ws://127.0.0.1:8000/ws/session/${sessionId}/`);
+      // ws = new WebSocket(`ws://127.0.0.1:8000/ws/session/${sessionId}/`);
+      ws = new WebSocket(`wss://tazama.africa/ws/session/${sessionId}/`);
       
       // Reattach message handler for the new connection
       ws.onmessage = (event) => {
