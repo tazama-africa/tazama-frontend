@@ -76,7 +76,7 @@ export const useMusicStore = defineStore("music", {
         this.error = "Failed to suggest song";
         Toast.fire({
           icon: "error",
-          title: "Failed to  song",
+          title: "Suggestion Slots are full",
         });
       }
     }

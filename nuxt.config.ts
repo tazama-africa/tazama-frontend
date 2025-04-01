@@ -27,7 +27,7 @@ const EnvConfigs: {
   },
 };
 
-let appEnv = process.env.APP_ENV || "development";
+let appEnv = process.env.APP_ENV || "staging";
 export default defineNuxtConfig({
   app: {
     baseURL: "/", // Ensure this is correctly set

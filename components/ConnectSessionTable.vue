@@ -36,7 +36,8 @@ const searchSongs = async (query) => {
 
   try {
     isSearching.value = true;
-    const response = await fetch(`http://127.0.0.1:8000/api/search/song/?q=${encodeURIComponent(query)}`);
+    // const response = await fetch(`http://127.0.0.1:8000/api/search/song/?q=${encodeURIComponent(query)}`);
+    const response = await fetch(`https://tazama.africa/api/search/song/?q=${encodeURIComponent(query)}`);
     const data = await response.json();
     if (data.status === "success") {
       // Map the API response to match our playlist format
@@ -76,7 +77,8 @@ const connectWebSocket = () => {
   const playerNo = window.location.pathname.split('/player/')[1] || 'default';
   const sessionId = playerNo;
 
-  ws = new WebSocket(`ws://127.0.0.1:8000/ws/session/${sessionId}/`);
+  // ws = new WebSocket(`ws://127.0.0.1:8000/ws/session/${sessionId}/`);
+  ws = new WebSocket(`wss://tazama.africa/ws/session/${sessionId}/`);
 
   ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
