@@ -33,16 +33,27 @@ export const useAuthStore = defineStore("auth", {
           throw new Error("Invalid Credentials");
         }
 
-        this.setAuthData(
-          response.tokens.access,
-          response.tokens.refresh,
-          response.user
-        );
+        if (response.tokens && response.tokens.access) {
+          this.setAuthData(
+            response.tokens.access,
+            response.tokens.refresh,
+            response.user
+          );
+
+          // Fetch listener genres
+          await this.fetchPlaylist();
+
+          navigateTo("/dashboard");
+          Toast.fire({
+            icon: "success",
+            title: "Registration Successful!",
+          });
+        }
 
         // Fetch listener genres
         await this.fetchPlaylist();
 
-        navigateTo("/dashboard");
+        // navigateTo("/dashboard");
         Toast.fire({
           icon: "success",
           title: "Login Successful!",
@@ -54,7 +65,22 @@ export const useAuthStore = defineStore("auth", {
         });
       }
     },
-
+    async recoverPassword(email) {
+      try {
+        const response = await userService.recover_password(email);
+        Toast.fire({
+          icon: "success",
+          title: "Email Sent Successfully",
+        });
+      } catch (error) {
+        navigateTo("/accounts/register"); 
+        Toast.fire({
+          icon: "error",
+          title: "Account Does not Exist",
+        });
+      }
+    },
+    
     async registerUser(email, phone, password, genres) {
       this.loading = true;
       this.errorMessage = "";
@@ -84,6 +110,23 @@ export const useAuthStore = defineStore("auth", {
         });
       } finally {
         this.loading = false;
+      }
+    },
+
+    async confirmPassword(password, token) {
+      try {
+        const response = await userService.recover_password_confirm(password, token);
+        Toast.fire({
+          icon: "success",
+          title: "Password Reset Successfully",
+        });
+        navigateTo("/accounts/login"); 
+
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "Account Does not Exist",
+        });
       }
     },
 

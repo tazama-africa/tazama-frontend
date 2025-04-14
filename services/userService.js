@@ -10,6 +10,8 @@ export const requestOptions = {
 
 export const userService = {
     login,
+    recover_password,
+    recover_password_confirm,
     register,
     getListenerGenres,
     getListenerPlaylist
@@ -21,6 +23,22 @@ async function login(email, password) {
     return await $fetch(API_URL + "/login/", {
         method: 'POST',
         body: {email, password}
+    });
+}
+
+async function recover_password(email) {
+    const API_URL = useRuntimeConfig().public.apiBase;
+    return await $fetch(API_URL + "/recover-password/", {
+        method: 'POST',
+        body: {email}
+    });
+}
+
+async function recover_password_confirm(password, token) {
+    const API_URL = useRuntimeConfig().public.apiBase;
+    return await $fetch(API_URL + "/confirm-password/", {
+        method: 'POST',
+        body: {password, token}
     });
 }
 
