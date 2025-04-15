@@ -13,7 +13,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
     "/accounts/register",
     "/accounts/forgot-password",
     "/verify-code",
-    "/reset-password",
+    "/password-reset-confirm",
   ];
 
 
