@@ -6,7 +6,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
   }
   const authStore = useAuthStore();
   const publicRoutes = [
-    "/",
+    "/get-started",
     "/about",
     "/contact",
     "/accounts/login",
@@ -29,7 +29,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
   // Check if user is authenticated
   if (!authStore.token ) {
-    return navigateTo("/accounts/login");
+    return navigateTo("/get-started");
 
   }
   

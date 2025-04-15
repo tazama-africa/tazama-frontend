@@ -8,32 +8,9 @@
         <div class="lg:w-[25%] w-full lg:block hidden">
             <SideNav />
         </div>
-        <div class="lg:w-[75%] w-full lg:m-4 lg:space-y-4 ">
-            <div
-                class="lg:bg-white bg-gradient-to-r from-blue-500 to-blue-600 border-b py-3 w-full h-10 flex justify-between  items-center text-sm p-4 px-2 lg:rounded-full">
-                <div class="flex pl-5 gap-1">
-                    <div class="flex gap-2 items-center">
-                        <!-- <NuxtImg src="/logo-long-1.png" class="lg:w-[80%] h-12 object-cover" /> -->
-                        <p class="text-gray-300 ">Dashboard</p>
-                    </div>
-                </div>
-                <!-- <div>
-                    <SearchSongs />
-                </div> -->
-
-                <div>
-                    <div class="flex gap-2 items-center py-2 text-gray-900 pr-4">
-                        <div
-                            class="flex items-center justify-center w-8 h-8 overflow-hidden bg-blue-500 text-white  rounded-full">
-                            <div>
-                                <UserProfile />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="h-[93%] bg-white overflow-y-scroll  lg:rounded-2xl shadow-xl lg:p-0 p-0 ">
+        <div class="lg:w-[75%]  w-full lg:m-4 lg:space-y-4 ">
+            
+            <div style="background-color: #030303" class="h-[95%]  overflow-y-scroll lg:rounded-2xl shadow-xl lg:p-0 p-0 ">
                 <slot />
                 <BottomNav />
             </div>
@@ -53,4 +30,6 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+</style>

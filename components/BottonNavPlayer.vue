@@ -26,8 +26,8 @@ console.log(route.params.path)
       </NuxtLink>
 
       <!-- player -->
-      <NuxtLink to="/" class="flex flex-col items-center text-gray-100"
-        :class="{ 'text-orange-500 font-bold':  route.path === '/player/' }">
+      <NuxtLink to="/" class="flex flex-col items-center text-orange-500"
+        >
         <!-- <Home class="w-6 h-6" /> -->
         <svg xmlns="http://www.w3.org/2000/svg"  class="w-7 h-7 -my-1 text-white"  viewBox="0 0 48 48">
           <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
