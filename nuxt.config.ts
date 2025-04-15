@@ -27,7 +27,7 @@ const EnvConfigs: {
   },
 };
 
-let appEnv = process.env.APP_ENV || "development";
+let appEnv = process.env.APP_ENV || "staging";
 export default defineNuxtConfig({
   app: {
     baseURL: "/", // Ensure this is correctly set
@@ -40,17 +40,13 @@ export default defineNuxtConfig({
       apiBase: EnvConfigs[appEnv].apiEndPoint,
     },
   },
-  modules: [
-    "@nuxt/ui",
-    // "@nuxtjs/tailwindcss",
-    "@pinia/nuxt",
-    "@vite-pwa/nuxt",
-    "@nuxt/image",
-  ],
+  modules: ["@nuxt/ui", // "@nuxtjs/tailwindcss",
+  "@pinia/nuxt", "@vite-pwa/nuxt", "@nuxt/image", "@nuxt/fonts", '@nuxt/fonts'],
+  
   css: ["sweetalert2/dist/sweetalert2.min.css", "~/assets/css/tailwind.css"],
   plugins: [{ src: "~/plugins/sweet-alert2.js", mode: "client" }],
   colorMode: {
-    preference: 'light'
+    preference: 'dark'
   },
   image: {
     // Image optimization options

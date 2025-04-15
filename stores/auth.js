@@ -34,7 +34,7 @@ export const useAuthStore = defineStore("auth", {
         }
         this.setAuthData(response.tokens.access, response.tokens.refresh, response.user);
         await this.fetchPlaylist();
-        navigateTo("/dashboard");
+        navigateTo("/");
         Toast.fire({ icon: "success", title: "Login Successful!" });
       } catch (error) {
         Toast.fire({ icon: "error", title: "Confirm Email and Password" });
@@ -56,7 +56,7 @@ export const useAuthStore = defineStore("auth", {
         if (response.tokens && response.tokens.access) {
           this.setAuthData(response.tokens.access, response.tokens.refresh, response.user);
           await this.fetchPlaylist();
-          navigateTo("/dashboard");
+          navigateTo("/");
           Toast.fire({ icon: "success", title: "Registration Successful!" });
         }
       } catch (error) {

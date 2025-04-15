@@ -6,7 +6,10 @@ export default defineNuxtConfig({
       theme: {
         extend: {
           colors: {
-            tazama: "#ff6600", // Replace with your desired color
+            tazama: "#ff6600",
+          },
+          fontFamily: {
+            montserrat: ['Montserrat', 'sans-serif'],
           },
         },
       },
