@@ -14,7 +14,8 @@ export const userService = {
     recover_password_confirm,
     register,
     getListenerGenres,
-    getListenerPlaylist
+    getListenerPlaylist,
+    refreshToken
 };
 
 
@@ -39,6 +40,15 @@ async function recover_password_confirm(password, token) {
     return await $fetch(API_URL + "/confirm-password/", {
         method: 'POST',
         body: {password, token}
+    });
+}
+
+
+async function refreshToken(refreshToken) {
+    const response = await fetch("/api/token/refresh/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ refresh: refreshToken }),
     });
 }
 
