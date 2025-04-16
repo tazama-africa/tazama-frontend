@@ -61,11 +61,20 @@
     <!-- connect Session -->
     <ConnectSession />
   </div>
-  
+
   <!-- trending genres -->
-  <div>    
-    <PreferredPlaylist /> 
+  <div>
+    <PreferredPlaylist />
   </div>
+
+
+  <h3 class="text-white text-lg  font-bold   mt-5 border-t border-gray-600 pt-2 mx-4 ">
+    Suggested Songs
+  </h3>
+  <p class="text-white text-xs p-2 px-4 ">
+    Based on your preferences
+  </p>
+  <SuggestedSongs />
 </template>
 
 

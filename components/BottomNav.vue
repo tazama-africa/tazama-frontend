@@ -26,10 +26,12 @@ console.log(route.params.path)
       </NuxtLink>
 
       <!-- player -->
-      <NuxtLink to="/" class="flex flex-col items-center text-gray-100"
-        :class="{ 'text-orange-500 font-bold':  route.path === '/player/' }">
+      <NuxtLink to="/player" class="flex flex-col items-center text-gray-100"
+        :class="{ 'text-orange-500 font-bold':  route.path === '/player' }">
         <!-- <Home class="w-6 h-6" /> -->
-        <svg xmlns="http://www.w3.org/2000/svg"  class="w-7 h-7 -my-1 text-white"  viewBox="0 0 48 48">
+        <svg xmlns="http://www.w3.org/2000/svg"  class="w-7 h-7 -my-1"  
+        
+        viewBox="0 0 48 48">
           <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
             d="M37.555 33.151H18.41a2.156 2.156 0 0 1-2.059-2.795l4.344-13.99a2.16 2.16 0 0 1 2.059-1.517h19.195a2.156 2.156 0 0 1 2.057 2.802l-4.394 13.99a2.16 2.16 0 0 1-2.057 1.51"
             stroke-width="1" />

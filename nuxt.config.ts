@@ -20,7 +20,7 @@ const EnvConfigs: {
     env: "staging",
   },
   production: {
-    apiEndPoint: "https://tazama.africa/api",
+    apiEndPoint: "http://127.0.1:8000/api",
     paypalClientId:
       "AcQuntxYMUMI0tGIlIEHL1cwVBuvaC5hJPjloiIofoDcfhxDnnPmjfwu8hYjnCsIkGVcmjIIdnUzLeAr",
     env: "production",

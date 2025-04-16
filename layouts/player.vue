@@ -1,7 +1,7 @@
 <template>
 
     <Head>
-        <Title>Jam Music - Tazama </Title>
+        <Title>Player - Tazama </Title>
     </Head>
 
     <div class="flex lg:bg-slate-100 lg:gap-10 gap-4 h-screen overflow-y-hidden">
