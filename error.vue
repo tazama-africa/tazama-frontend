@@ -14,8 +14,8 @@
                     </h3>
                     <p>It looks like something broke.</p>
                     <p>Sorry about that.</p>
-                    <nuxt-link to="/accounts/login" class="py-2 px-20 bg-blue-600 text-white rounded-xl hover:bg-blue-400">
-                        Login
+                    <nuxt-link to="/" class="py-2 px-20 bg-blue-600 text-white rounded-xl hover:bg-blue-400">
+                        Go to Home
                     </nuxt-link>
                 </div>
             </div>

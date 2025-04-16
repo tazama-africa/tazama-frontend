@@ -1,5 +1,5 @@
 <template>
-    <div class="relative w-full h-[20vh] bg-cover bg-center overflow-x-hidden"
+    <div class="relative w-full h-[25%] bg-cover bg-center overflow-x-hidden"
         style="background-image: url('https://img.freepik.com/free-photo/abstract-dark-background-with-flowing-colouful-waves_1048-13124.jpg?t=st=1744703664~exp=1744707264~hmac=d21c02e20279a3ba40a5d2f22207b4fe0223fb8a174648eb16490b8e0028968f&w=826');">
         <!-- Gradient Overlay -->
         <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 via-40% to-transparent opacity-90 z-0">
