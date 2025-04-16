@@ -1,6 +1,6 @@
 <template>
     <div
-        class="absolute mt-8   left-4 right-4 p-1 bg-gradient-to-r from-gray-900/90 to-gray-800/90 backdrop-blur-md rounded-2xl text-white shadow-lg border border-white/10">
+        class="absolute mt-4   left-4 right-4 p-1 bg-gradient-to-r from-gray-900/90 to-gray-800/90 backdrop-blur-md rounded-2xl text-white shadow-lg border border-white/10">
         <div class="flex p-3 items-center gap-4">
             <!-- Left Section: Connect Info -->
             <div class="">

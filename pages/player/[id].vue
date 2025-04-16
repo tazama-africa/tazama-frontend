@@ -1,5 +1,5 @@
 <template>
-    <div class="relative w-full h-[30vh] bg-cover bg-center overflow-x-hidden"
+    <div class="relative w-full h-[20vh] bg-cover bg-center overflow-x-hidden"
         style="background-image: url('https://img.freepik.com/free-photo/abstract-dark-background-with-flowing-colouful-waves_1048-13124.jpg?t=st=1744703664~exp=1744707264~hmac=d21c02e20279a3ba40a5d2f22207b4fe0223fb8a174648eb16490b8e0028968f&w=826');">
         <!-- Gradient Overlay -->
         <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 via-40% to-transparent opacity-90 z-0">
@@ -38,29 +38,6 @@
                     class="shrink-0 min-w-max bg-white/10 backdrop-blur-md border border-white/20 text-white py-1 px-4 rounded text-sm shadow-sm">
                     {{ genre.genre__title }} . {{ genre.count }}
                 </div>
-            </div>
-        </div>
-
-        <!-- Current track -->
-        <div class="flex items-center justify-center mt-10">
-            <!-- Left waveform -->
-            <div class="flex items-center mr-4">
-                <div v-for="n in 3" :key="'left-' + n" class="w-1 h-5 bg-orange-500 mx-1 rounded animate-wave"
-                    :style="{ animationDelay: `${n * 0.1}s` }"></div>
-            </div>
-
-            <!-- Play button -->
-            <div
-                class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center cursor-pointer hover:bg-orange-400 transition-colors duration-300">
-                <div
-                    class="w-0 h-0 border-l-[18px] border-l-white border-t-[12px] border-t-transparent border-b-[12px] border-b-transparent ml-1">
-                </div>
-            </div>
-
-            <!-- Right waveform -->
-            <div class="flex items-center ml-4">
-                <div v-for="n in 3" :key="'right-' + n" class="w-1 h-5 bg-orange-500 mx-1 rounded animate-wave"
-                    :style="{ animationDelay: `${n * 0.1}s` }"></div>
             </div>
         </div>
 

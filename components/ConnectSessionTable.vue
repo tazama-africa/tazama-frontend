@@ -213,7 +213,7 @@ const columns = [
     </div>
 
 
-    <UTable :rows="filteredPlaylist" :columns="columns" hover class="mx-4 divide-y-0 border-0">
+    <UTable :rows="filteredPlaylist" :columns="columns" hover class="  divide-y-0 border-0">
       <template #title-data="{ row }">
         <div class="flex items-center lg:space-x-3 space-x-2 lg:w-full w-56">
           <div class="w-1/6 lg:w-auto">
