@@ -52,7 +52,10 @@ const filteredSongs = computed(() => {
       <UInput v-model="globalFilter" class="max-w-sm mb-4" placeholder="Search..." />
 
       <!-- **Fix: Bind `filteredSongs` instead of `songs`** -->
-      <UTable :rows="filteredSongs" :columns="columns" />
+      <!-- <UTable :rows="filteredSongs" :columns="columns" /> -->
+
+      <ConnectSessionTable />
+
     </div>
   </div>
 </template>

@@ -1,6 +1,6 @@
 export default defineAppConfig({
   ui: {
-    primary: 'tazama',
+    primary: 'blue',
     gray: 'cool',
     notifications: {
       position: 'top-0 bottom-auto'

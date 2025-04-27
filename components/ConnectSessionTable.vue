@@ -36,8 +36,8 @@ const searchSongs = async (query) => {
 
   try {
     isSearching.value = true;
-    // const response = await fetch(`http://127.0.0.1:8000/api/search/song/?q=${encodeURIComponent(query)}`);
-    const response = await fetch(`https://tazama.africa/api/search/song/?q=${encodeURIComponent(query)}`);
+    const response = await fetch(`http://127.0.0.1:8000/api/search/song/?q=${encodeURIComponent(query)}`);   // 1 -------------------
+    // const response = await fetch(`https://tazama.africa/api/search/song/?q=${encodeURIComponent(query)}`);
     const data = await response.json();
     if (data.status === "success") {
       // Map the API response to match our playlist format
@@ -77,8 +77,8 @@ const connectWebSocket = () => {
   const playerNo = window.location.pathname.split('/player/')[1] || 'default';
   const sessionId = playerNo;
 
-  // ws = new WebSocket(`ws://127.0.0.1:8000/ws/session/${sessionId}/`);
-  ws = new WebSocket(`wss://tazama.africa/ws/session/${sessionId}/`);
+  ws = new WebSocket(`ws://127.0.0.1:8000/ws/session/${sessionId}/`); // 2 -------------------
+  // ws = new WebSocket(`wss://tazama.africa/ws/session/${sessionId}/`);
 
   ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
@@ -115,9 +115,9 @@ const SuggestSong = async (songId) => {
   console.log(songId, sessionId);
 
   // Create WebSocket connection
-  // let ws = new WebSocket(`ws://127.0.0.1:8000/ws/session/${sessionId}/`);
+  let ws = new WebSocket(`ws://127.0.0.1:8000/ws/session/${sessionId}/`); // 3 -------------------
 
-  let ws = new WebSocket(`wss://tazama.africa/ws/session/${sessionId}/`);
+  // let ws = new WebSocket(`wss://tazama.africa/ws/session/${sessionId}/`);
 
   // Set up message handler
   ws.onmessage = (event) => {
@@ -139,8 +139,8 @@ const SuggestSong = async (songId) => {
 
     // Reconnect after a short delay
     setTimeout(() => {
-      // ws = new WebSocket(`ws://127.0.0.1:8000/ws/session/${sessionId}/`);
-      ws = new WebSocket(`wss://tazama.africa/ws/session/${sessionId}/`);
+      ws = new WebSocket(`ws://127.0.0.1:8000/ws/session/${sessionId}/`);  // 4 -------------------
+      // ws = new WebSocket(`wss://tazama.africa/ws/session/${sessionId}/`);
 
       // Reattach message handler for the new connection
       ws.onmessage = (event) => {
@@ -194,7 +194,7 @@ const columns = [
   <div class="flex flex-col overflow-auto overflow-x-hidden lg:p-5 pb-10 text-white">
     <div class="flex flex-col lg:flex-row gap-2 w-full lg:items-center lg:px-2 px-2 justify-between py-3">
       <div class="font-small gap-2 flex flex-row items-end justify-between">
-        <div class="flex items-end gap-2">          
+        <div class="flex items-end gap-2">
           <div class="lg:text-lg font-bold text-xs text-blue-600">Add songs to playlist</div>
         </div>
         <div class="flex gap-1">
@@ -207,9 +207,12 @@ const columns = [
         </div>
       </div>
       <div class="flex mt-2">
-        <UInput v-model="globalFilter" icon="i-lucide-search" size="md" style="background-color: #212121;"
-          class="lg:w-64 bg-gray-600 w-full" placeholder="Search..." />
+        <UInput v-model="globalFilter" icon="i-lucide-search" size="md"
+          style="background-color: #212121; color: white;  "
+          class="lg:w-64 bg-gray-600 w-full text-white placeholder:text-white"
+          placeholder="Search..." />
       </div>
+
     </div>
 
 

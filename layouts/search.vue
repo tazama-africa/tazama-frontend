@@ -1,5 +1,5 @@
 <template>
-
+    <VitePwaManifest />
     <Head>
         <Title>Tazama - Search</Title>
     </Head>

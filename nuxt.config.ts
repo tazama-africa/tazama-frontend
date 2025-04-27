@@ -1,5 +1,3 @@
-let backendURL = process.env.BACKEND_URL || "http://localhost:8000";
-
 const EnvConfigs: {
   [key: string]: {
     apiEndPoint: string;
@@ -20,14 +18,16 @@ const EnvConfigs: {
     env: "staging",
   },
   production: {
-    apiEndPoint: "http://127.0.1:8000/api",
+    apiEndPoint: "https://prod.tazama.africa/api",
     paypalClientId:
       "AcQuntxYMUMI0tGIlIEHL1cwVBuvaC5hJPjloiIofoDcfhxDnnPmjfwu8hYjnCsIkGVcmjIIdnUzLeAr",
     env: "production",
   },
 };
 
-let appEnv = process.env.APP_ENV || "staging";
+let appEnv =
+  process.env.APP_ENV ||
+  (process.env.NODE_ENV === "production" ? "production" : "development");
 export default defineNuxtConfig({
   app: {
     baseURL: "/", // Ensure this is correctly set
@@ -40,24 +40,28 @@ export default defineNuxtConfig({
       apiBase: EnvConfigs[appEnv].apiEndPoint,
     },
   },
-  modules: ["@nuxt/ui", // "@nuxtjs/tailwindcss",
-  "@pinia/nuxt", "@vite-pwa/nuxt", "@nuxt/image", "@nuxt/fonts", '@nuxt/fonts'],
-  
+  modules: [
+    "@nuxt/ui", // "@nuxtjs/tailwindcss",
+    "@pinia/nuxt",
+    "@vite-pwa/nuxt",
+    "@nuxt/image",
+    "@nuxt/fonts",
+  ],
+
   css: ["sweetalert2/dist/sweetalert2.min.css", "~/assets/css/tailwind.css"],
   plugins: [{ src: "~/plugins/sweet-alert2.js", mode: "client" }],
   colorMode: {
-    preference: 'dark'
+    preference: "dark",
   },
   image: {
     // Image optimization options
   },
   devtools: { enabled: false },
-  // pwa: false,
   // pwa: {
   //   manifest: {
-  //     name: "Smart One",
-  //     short_name: "Smart One",
-  //     description: "Water Bill Management System",
+  //     name: "Tazama",
+  //     short_name: "Tazama",
+  //     description: "AI DJ - Transit Partner",
   //     theme_color: "#ffffff",
   //     icons: [
   //       {
@@ -96,6 +100,7 @@ export default defineNuxtConfig({
   //   devOptions: {
   //     enabled: true,
   //     type: "module",
+  //     suppressWarnings: true, // Prevents showing those harmless dev warnings
   //   },
   // },
   compatibilityDate: "2025-02-18",

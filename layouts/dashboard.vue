@@ -1,5 +1,5 @@
 <template>
-
+    <VitePwaManifest />
     <Head>
         <Title>Tazama - Dashboard</Title>
     </Head>

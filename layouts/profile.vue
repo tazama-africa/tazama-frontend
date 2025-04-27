@@ -1,5 +1,5 @@
 <template>
-
+    <VitePwaManifest />
     <Head>
         <Title>Player - Tazama </Title>
     </Head>

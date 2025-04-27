@@ -34,7 +34,7 @@
         <!-- connect Session -->
         <ConnectSession />
     </div>
-    <div class="p-2 -mt-4 mb-5">
+    <div class="p-2 mt-2 mb-5">
         <h3 class='text-white px-2 text-lg'>
             Dashboard
         </h3>

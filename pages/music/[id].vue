@@ -132,8 +132,8 @@ export default {
     console.log('Route params:', this.$route.params)
     this.sessionId = this.$route.params.id || '2020'
     console.log('Selected sessionId:', this.sessionId)
-    // this.apiUrl = `http://127.0.0.1:8000/api/sessions/${this.sessionId}/now-and-next/`
-    this.apiUrl = `https://tazama.africa/api/sessions/${this.sessionId}/now-and-next/`
+    this.apiUrl = `http://127.0.0.1:8000/api/sessions/${this.sessionId}/now-and-next/`
+    // this.apiUrl = `https://tazama.africa/api/sessions/${this.sessionId}/now-and-next/`
     console.log('API URL:', this.apiUrl)
   },
   mounted() {
@@ -152,8 +152,8 @@ export default {
   watch: {
     '$route.params.sessionId'(newSessionId) {
       this.sessionId = newSessionId || '2020'
-      // this.apiUrl = `http://127.0.0.1:8000/api/sessions/${this.sessionId}/now-and-next/`
-      this.apiUrl = `https://tazama.africa/api/sessions/${this.sessionId}/now-and-next/`
+      this.apiUrl = `http://127.0.0.1:8000/api/sessions/${this.sessionId}/now-and-next/`
+      // this.apiUrl = `https://tazama.africa/api/sessions/${this.sessionId}/now-and-next/`
       this.initializePlayer()
     }
   },

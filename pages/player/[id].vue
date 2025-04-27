@@ -1,5 +1,5 @@
 <template>
-    <div class="relative w-full h-[25%] bg-cover bg-center overflow-x-hidden"
+    <div class="relative w-full h-[22%] bg-cover bg-center overflow-x-hidden"
         style="background-image: url('https://img.freepik.com/free-photo/abstract-dark-background-with-flowing-colouful-waves_1048-13124.jpg?t=st=1744703664~exp=1744707264~hmac=d21c02e20279a3ba40a5d2f22207b4fe0223fb8a174648eb16490b8e0028968f&w=826');">
         <!-- Gradient Overlay -->
         <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 via-40% to-transparent opacity-90 z-0">
@@ -55,29 +55,11 @@
 
             </div>
             <div class='flex flex-row-reverse  gap-1'>
-                <div class='flex flex-col'>
-                    <div class="flex items-start bg-green-600 rounded-full">
-                        <div class=" px-3 py-2 text-xs">
-                            Pay Now
-                        </div>
-                        <button @click="copyNumber"
-                            class="text-xs hidden hover:bg-red-600 gap-2 hover:text-white bg-orange-300 px-3 py-2  rounded-full text-orange-600">
-                            <div>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4" viewBox="0 0 24 24">
-                                    <g fill="none" stroke="currentColor" stroke-width="1.5">
-                                        <path
-                                            d="M6 11c0-2.828 0-4.243.879-5.121C7.757 5 9.172 5 12 5h3c2.828 0 4.243 0 5.121.879C21 6.757 21 8.172 21 11v5c0 2.828 0 4.243-.879 5.121C19.243 22 17.828 22 15 22h-3c-2.828 0-4.243 0-5.121-.879C6 20.243 6 18.828 6 16z" />
-                                        <path
-                                            d="M6 19a3 3 0 0 1-3-3v-6c0-3.771 0-5.657 1.172-6.828S7.229 2 11 2h4a3 3 0 0 1 3 3"
-                                            opacity="0.5" />
-                                    </g>
-                                </svg>
-                            </div>
-                        </button>
-                    </div>
+                <div class="flex flex-col">
+                    <PayFareModal :playerNo="sessionId" />
                 </div>
                 <div class="flex flex-col">
-                    <ReportIncident />
+                    <ReportIncident  :playerNo="sessionId"/>
                 </div>
             </div>
         </div>

@@ -1,16 +1,20 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useClipboard } from '@vueuse/core'
+const props = defineProps<{
+    playerNo: string
+}>()
 
 const open = ref(false)
 const selectedIssue = ref('')
 const reportDetails = ref('')
 const matatuPhoneNumber = ref('+254712345678')
+const fleetNo = ref('') // New ref for Fleet No input
 const { copy, copied } = useClipboard({ source: matatuPhoneNumber })
 
 const issues = [
     'Reckless Driving',
-    'Overcharging Fares',
+    'Overcharging Fare',
     'Verbal/Physical Harassment',
     'Overloading Passengers',
     'Loud Music',
@@ -23,19 +27,49 @@ const issues = [
 const closeModal = () => {
     open.value = false
 }
+
+// Function to submit report to API
+const submitReport = async () => {
+    if (!selectedIssue.value || !reportDetails.value) {
+        alert('Please fill in all required fields: Fleet No, Issue, and Details.')
+        return
+    }
+
+    const payload = {
+        fleetNo: props.playerNo,
+        plateNo: 'KAV 455W',
+        issue: selectedIssue.value,
+        details: reportDetails.value,
+        hotlineContact: matatuPhoneNumber.value // Include if required by API
+    }
+
+    console.log(payload)
+
+    //   try {
+    //     const { data, error } = await useFetch('/api/reports', {
+    //       method: 'POST',
+    //       body: payload
+    //     })
+
+    //     if (error.value) {
+    //       throw new Error(error.value.message || 'Failed to submit report')
+    //     }
+
+    //     alert('Report submitted successfully!')
+    //     closeModal() // Close modal on success
+    //   } catch (error) {
+    //     console.error('Error submitting report:', error)
+    //     alert('An error occurred while submitting the report.')
+    //   }
+}
 </script>
 
 <template>
     <div class="relative">
         <!-- Open Modal Button -->
-        <!-- <button @click="open = true" class="bg-red-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-700">
-            Report Issue
-        </button> -->
         <button @click="open = true"
-            class="flex items-center gap-1   hover:bg-red-600 hover:text-white ml-2 px-6 lg:px-10 py-2 border rounded-full text-orange-50 ">
-            <div target="blank" class="text-xs">
-                Report
-            </div>
+            class="flex items-center gap-1 hover:bg-red-600 hover:text-white ml-2 px-6 lg:px-10 py-2 border rounded-full text-orange-50">
+            <div class="text-xs">Report</div>
             <div>
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4" viewBox="0 0 24 24">
                     <path fill="currentColor"
@@ -49,16 +83,35 @@ const closeModal = () => {
             <div v-if="open" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4 z-50"
                 @click.self="closeModal">
                 <!-- Modal Content -->
-                <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
+                <div style="background-color: rgb(34, 35, 38)"
+                    class="rounded-lg shadow-lg p-6 w-full max-w-md relative">
                     <!-- Modal Title -->
-                    <h2 class="text-lg font-semibold text-gray-800">Report an Issue</h2>
-                    <p class="text-sm text-gray-600 mb-4">Help improve safety and service by reporting incidents.</p>
+                    <h2 class="text-lg font-semibold text-gray-100">Report an Issue</h2>
+                    <p class="text-xs text-gray-200 mb-4">Help improve safety and service by reporting incidents.</p>
+
+                    <!-- Fleet Number -->
+                    <div class="flex">
+                        <div class="flex w-2/3">
+                            <div class="mb-4">
+                                <label class="block text-sm text-left font-medium text-gray-200">Fleet No</label>
+                                <input :value="playerNo" readonly
+                                    class="mt-1 p-2 border text-xs text-gray-200 bg-transparent border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500" />
+                            </div>
+                        </div>
+                        <div class="flex flex-col w-1/3">
+                            <label class="block text-sm text-left font-medium text-gray-200">Plate No</label>
+                            <div
+                                class="mt-1 p-2 border text-center text-xs text-gray-100 bg-transparent border-gray-500 rounded-lg focus:ring-orange-500 focus:border-orange-500">
+                                KAV 455W
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- Issue Selection -->
                     <div class="mb-4">
-                        <label class="block text-sm text-left font-medium text-gray-700">Select Issue</label>
+                        <label class="block  text-sm text-left font-medium text-gray-200">Select Issue</label>
                         <select v-model="selectedIssue"
-                            class="w-full mt-1 p-2 border text-xs text-gray-700 bg-white border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500">
+                            class="w-full mt-1 p-2 border bg-slate-800 text-xs text-gray-200   border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500">
                             <option disabled value="">Select an issue...</option>
                             <option v-for="issue in issues" :key="issue" :value="issue">{{ issue }}</option>
                         </select>
@@ -66,26 +119,21 @@ const closeModal = () => {
 
                     <!-- Description Box -->
                     <div class="mb-4">
-                        <label class="block text-sm  text-left font-medium text-gray-700">Details</label>
+                        <label class="block text-sm text-left font-medium text-gray-200">Details</label>
                         <textarea v-model="reportDetails"
-                            class="w-full mt-1 text-gray-700 p-2 border placeholder:text-sm text-sm border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500"
+                            class="w-full mt-1 bg-transparent text-gray-200 p-2 border placeholder:text-xs text-sm border-gray-300 rounded-lg focus:ring-red-500 focus:border-red-500"
                             placeholder="Describe the issue..."></textarea>
                     </div>
 
                     <!-- Copyable Phone Number -->
                     <div>
-                        <label class="block text-sm pb-1 text-left font-medium text-gray-700">Hotline
-                            Contact</label>
-
-
+                        <label class="block text-sm pb-1 text-left font-medium text-gray-200">Hotline Contact</label>
                         <div class="flex items-center justify-between w-full bg-orange-200 rounded-full">
                             <input v-model="matatuPhoneNumber" readonly
-                                class="text-sm bg-orange-200 text-gray-900 px-3 py-2  rounded-l-full w-32 cursor-not-allowed">
+                                class="text-sm bg-orange-200 text-gray-900 px-3 py-2 rounded-l-full w-32 cursor-not-allowed" />
                             <button @click="copy()"
-                                class="text-xs flex hover:bg-red-600 gap-2 hover:text-white bg-orange-300 px-3 py-2  rounded-full text-orange-600">
-                                <div>
-                                    {{ copied ? "Copied!" : "Copy" }}
-                                </div>
+                                class="text-xs flex hover:bg-red-600 gap-2 hover:text-white bg-orange-300 px-3 py-2 rounded-full text-orange-600">
+                                <div>{{ copied ? 'Copied!' : 'Copy' }}</div>
                                 <div>
                                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4" viewBox="0 0 24 24">
                                         <g fill="none" stroke="currentColor" stroke-width="1.5">
@@ -101,15 +149,14 @@ const closeModal = () => {
                         </div>
                     </div>
 
-
                     <!-- Buttons -->
                     <div class="flex text-sm justify-end mt-4 space-x-2">
                         <button @click="closeModal"
-                            class="px-4 py-2 text-sm bg-gray-200 text-gray-800 rounded-full hover:bg-gray-400">
+                            class="px-4 py-2 text-xs bg-gray-200 text-gray-800 rounded-full hover:bg-gray-400">
                             Cancel
                         </button>
-                        <button @click="closeModal"
-                            class="px-4 py-2 text-sm  bg-orange-600 text-white rounded-full hover:bg-red-700">
+                        <button @click="submitReport"
+                            class="px-4 py-2 text-xs bg-orange-600 text-white rounded-full hover:bg-red-700">
                             Submit Report
                         </button>
                     </div>
