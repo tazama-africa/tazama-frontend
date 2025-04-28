@@ -1,18 +1,23 @@
 <template>
-    <VitePwaManifest />
+    <!-- <VitePwaManifest /> -->
+
     <Head>
         <Title>Tazama</Title>
     </Head>
 
     <div class="flex lg:bg-slate-100 lg:gap-10 gap-4 h-screen overflow-y-hidden">
-        <div class="lg:w-[25%] w-full lg:block hidden">
+        <!-- <div class="lg:w-[25%] w-full lg:block hidden">
             <SideNav />
-        </div>
-        <div class="lg:w-[75%]  w-full lg:m-4 lg:space-y-4 ">
-            
-            <div style="background-color: #030303" class="h-[95%]  overflow-y-scroll lg:rounded-2xl shadow-xl lg:p-0 p-0 ">
+        </div> -->
+        <div class="lg:w-[100%]  w-full   lg:space-y-4 ">
+
+            <div style="background-color: #030303"
+                class="lg:h-[100%] h-[95%]  overflow-y-scroll   shadow-xl lg:p-0 p-0 ">
                 <slot />
-                <BottomNav />
+                <div :class="{ 'hidden': route.path === '/accounts/login' || route.path === '/accounts/forgot-password' || route.path === '/accounts/register' || route.path === '/get-started' }">
+                    <BottomNav />
+                </div>
+
             </div>
         </div>
     </div>
@@ -21,6 +26,11 @@
 <script setup>
 import { useAuthStore } from "@/stores/auth";
 import { onMounted } from "vue";
+import { useRoute } from 'vue-router';
+// import { Home, Search, User } from 'lucide-vue-next';
+
+const route = useRoute();
+
 
 const authStore = useAuthStore();
 

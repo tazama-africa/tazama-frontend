@@ -1,6 +1,6 @@
 <template>
-    <div class="relative w-full h-[22%] bg-cover bg-center overflow-x-hidden"
-        style="background-image: url('https://img.freepik.com/free-photo/abstract-dark-background-with-flowing-colouful-waves_1048-13124.jpg?t=st=1744703664~exp=1744707264~hmac=d21c02e20279a3ba40a5d2f22207b4fe0223fb8a174648eb16490b8e0028968f&w=826');">
+    <div class="fixed z-10 top-0 w-full h-[20%] bg-cover bg-center overflow-x-hidden"
+        style="background-image: url('https://videos.openai.com/vg-assets/assets%2Ftask_01jsxxs8h9fkk9dp2eqh7pj9jp%2F1745834874_img_0.webp?st=2025-04-28T08%3A29%3A55Z&se=2025-05-04T09%3A29%3A55Z&sks=b&skt=2025-04-28T08%3A29%3A55Z&ske=2025-05-04T09%3A29%3A55Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=aa5ddad1-c91a-4f0a-9aca-e20682cc8969&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=MCQvdlQGhcXuIKsWAWufPWXStyaFC0IF9uQhRD7trAg%3D&az=oaivgprodscus'); background-position: 500px  ;">
         <!-- Gradient Overlay -->
         <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 via-40% to-transparent opacity-90 z-0">
         </div>
@@ -64,7 +64,7 @@
             </div>
         </div>
     </div>
-    <div class="lg:rounded-t-2xl">
+    <div class="lg:rounded-t-2xl z-20 mt-[20vh]">
         <div class="text-white p-4 pb-2">
             <h2>
                 This is Love
@@ -169,9 +169,6 @@ console.log(playerStore.genredata)
 
 
 // Define the page layout
-definePageMeta({
-    layout: "player",
-});
 </script>
 
 

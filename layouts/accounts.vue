@@ -1,5 +1,5 @@
 <template>
-    <VitePwaManifest />
+    <!-- <VitePwaManifest /> -->
     <div class="lg:bg-slate-100 bg-white">
         <slot />
     </div>

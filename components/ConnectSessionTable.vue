@@ -209,7 +209,7 @@ const columns = [
       <div class="flex mt-2">
         <UInput v-model="globalFilter" icon="i-lucide-search" size="md"
           style="background-color: #212121; color: white;  "
-          class="lg:w-64 bg-gray-600 w-full text-white placeholder:text-white"
+          class="lg:w-64 bg-gray-600 w-full text-white rounded-2xl placeholder:text-white"
           placeholder="Search..." />
       </div>
 
@@ -220,7 +220,7 @@ const columns = [
       <template #title-data="{ row }">
         <div class="flex items-center lg:space-x-3 space-x-2 lg:w-full w-56">
           <div class="w-1/6 lg:w-auto">
-            <img :src="row.cover || 'https://hub.yamaha.com/wp-content/uploads/2021/09/How-vinyl-made-Fig.-2.jpg'"
+            <img :src="row.cover || 'https://images.rawpixel.com/dark_image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTAzL3JtNjA5ZGVzaWduLWVsZW1lbnRncm91cDAxLWJtLTAwMi5wbmc.png'"
               alt="Cover" class="lg:w-10 lg:h-10 w-7 h-7 rounded-md object-cover" />
           </div>
           <div class="w-5/6 lg:w-auto">

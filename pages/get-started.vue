@@ -1,11 +1,9 @@
 <template>
-    <div>
+    <div class="bg-white">
   
       <Head>
         <Title>TAZAMA AI DJ</Title>
       </Head>
-  
-  
   
       <nav
         class="bg-gradient-to-r opacity-1 lg:px-20 from-white to-yellow-500 via-white  fixed w-full z-20 top-0 start-0 border-b border-gray-200 ">
@@ -101,13 +99,10 @@
                     </p>
                     <br />
                     <div class="space-x-4">
-                      <nuxt-link to="/accounts/login" v-if="username === 'Guest'" class="bg-gradient-to-r from-orange-500 w-60 to-yellow-500 hover:bg-gradient-to-l text-white py-3 px-8 rounded-lg">
+                      <nuxt-link to="/accounts/login"   class="bg-gradient-to-r from-orange-500 w-60 to-yellow-500 hover:bg-gradient-to-l text-white py-3 px-8 rounded-lg">
                         Get Started
                       </nuxt-link> 
-                      <div v-else>
-                        <ConnectSession />
-                      </div>
-                      
+                       
                       <!-- <AccountsLoginModal /> -->
                       <a href=""
                         class="px-6 hidden py-3 bg-gray-50 border border-orange-600 text-gray-800 rounded-lg shadow-lg hover:bg-orange-300">
