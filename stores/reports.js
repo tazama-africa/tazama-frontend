@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { musicService } from "@/services/musicService";
 import { reportService } from "~/services/reportService";
+import { format, isToday, isYesterday, subDays, subMonths, isAfter } from 'date-fns'; // Install date-fns if you haven't
 import Swal from "sweetalert2";
 
 const Toast = Swal.mixin({
@@ -20,6 +21,8 @@ export const useReportStore = defineStore("report", {
     payload: [],
     report: [],
     reports: [],
+    history: [],
+    filteredHistory: [], // <--- NEW: this will store the filtered history
     searchQuery: '',
     dateFilter: 'all', // 'yesterday', 'last7days', 'lastMonth', 'all'
     loading: false,
@@ -49,6 +52,59 @@ export const useReportStore = defineStore("report", {
         console.error("Failed to fetch reports:", error);
       }
     },
+    async getHistoryStore() {
+      try {
+        const response = await reportService.getHistory();
+        this.history = response.history;
+        this.applyDateFilter(); // Automatically apply current filter
+      } catch (error) {
+        console.error('Failed to fetch reports:', error);
+      }
+    },
+
+    applyDateFilter() {
+      if (!this.history.length) {
+        this.filteredHistory = [];
+        return;
+      }
+
+      const today = new Date();
+      let filtered = [];
+
+      switch (this.dateFilter) {
+        case 'today':
+          filtered = this.history.filter(item => {
+            return isToday(new Date(item.timeStart)); // Assume your item has `created_at`
+          });
+          break;
+        case 'yesterday':
+          filtered = this.history.filter(item => {
+            return isYesterday(new Date(item.timeStart));
+          });
+          break;
+        case 'last7days':
+          filtered = this.history.filter(item => {
+            return isAfter(new Date(item.timeStart), subDays(today, 7));
+          });
+          break;
+        case 'lastMonth':
+          filtered = this.history.filter(item => {
+            return isAfter(new Date(item.timeStart), subMonths(today, 1));
+          });
+          break;
+        case 'all':
+        default:
+          filtered = [...this.history]; // all items
+      }
+
+      this.filteredHistory = filtered;
+    },
+
+    changeDateFilter(newFilter) {
+      this.dateFilter = newFilter;
+      this.applyDateFilter();
+    },
+  
 
     setDateFilter(filter) {
       this.dateFilter = filter;
@@ -64,7 +120,7 @@ export const useReportStore = defineStore("report", {
         Swal.fire({
           icon: 'success',
           title: 'Success!',
-          text: 'Report sDeleted successfully',
+          text: 'Report Deleted successfully',
           confirmButtonText: 'OK',
           customClass: {
             popup: 'modern-swal-popup',
@@ -81,6 +137,42 @@ export const useReportStore = defineStore("report", {
           icon: 'success',
           title: 'Success!',
           text: 'Report Deleted successfully',
+          confirmButtonText: 'OK',
+          customClass: {
+            popup: 'modern-swal-popup',
+            title: 'modern-swal-title',
+            content: 'modern-swal-content',
+            confirmButton: 'modern-swal-confirm',
+          },
+          timer: 2000,
+          timerProgressBar: true,
+        });
+      }
+    },
+    async deleteHistory(id) {
+      try {
+        await reportService.deleteHistory(id); // Call the delete API
+        await this.getHistoryStore(); // Refresh the reports list from the server
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'History Deleted successfully',
+          confirmButtonText: 'OK',
+          customClass: {
+            popup: 'modern-swal-popup',
+            title: 'modern-swal-title',
+            content: 'modern-swal-content',
+            confirmButton: 'modern-swal-confirm',
+          },
+          timer: 3000,
+          timerProgressBar: true,
+        });
+      } catch (error) {
+        // this.error = "Failed to delete report";
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'History Deleted successfully',
           confirmButtonText: 'OK',
           customClass: {
             popup: 'modern-swal-popup',

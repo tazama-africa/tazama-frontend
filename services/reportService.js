@@ -11,7 +11,9 @@ export const requestOptions = {
 export const reportService = {
     PostReport,
     getReport,
-    deleteReport
+    deleteReport,
+    getHistory,
+    deleteHistory
 }
 
 
@@ -38,9 +40,37 @@ async function getReport() {
         headers: headers,
     });
 }
+
 async function deleteReport(report_id) {
     const API_URL = useRuntimeConfig().public.apiBase;
     return await $fetch(API_URL + "/delete-report/", {
+        method: 'POST',
+        body: {report_id: report_id},
+        headers: headers,
+    });
+}
+
+
+// History
+
+async function getHistory() {
+    const API_URL = useRuntimeConfig().public.apiBase;
+    const userRaw = localStorage.getItem('user');  // this is a string
+
+    // Parse the string to an object
+    const userObj = JSON.parse(userRaw);
+
+    const email = userObj.email; // Now you have just the email!
+
+    return await $fetch(`${API_URL}/get-history/${email}`, {
+        method: "GET",
+        headers: headers,
+    });
+}
+
+async function deleteHistory(report_id) {
+    const API_URL = useRuntimeConfig().public.apiBase;
+    return await $fetch(API_URL + "/delete-history/", {
         method: 'POST',
         body: {report_id: report_id},
         headers: headers,

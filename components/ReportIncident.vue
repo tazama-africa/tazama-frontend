@@ -12,7 +12,8 @@ const open = ref(false)
 const selectedIssue = ref('')
 const reportDetails = ref('')
 const matatuPhoneNumber = ref('+254712345678')
-const fleetNo = ref('') // New ref for Fleet No input
+const fleetNo = ref('')
+const success = ref(false) // New ref for success state
 const { copy, copied } = useClipboard({ source: matatuPhoneNumber })
 
 const reportStore = useReportStore();
@@ -31,18 +32,16 @@ const issues = [
     'Other'
 ]
 
-// Function to close modal on backdrop click
 const closeModal = () => {
     open.value = false
+    success.value = false // Reset success state when closing modal
 }
-
 
 watchEffect(() => {
   const email = authStore.user?.email || "Guest";
-  username.value = email     // Get the first letter and ensure it's uppercase
+  username.value = email
 });
 
-// Function to submit report to API
 const submitReport = async () => {
     if (!selectedIssue.value || !reportDetails.value) {
         alert('Please fill in all required fields: Fleet No, Issue, and Details.')
@@ -55,34 +54,25 @@ const submitReport = async () => {
         plateNo: 'KAV 455W',
         issue: selectedIssue.value,
         details: reportDetails.value,
-        hotlineContact: matatuPhoneNumber.value // Include if required by API
+        hotlineContact: matatuPhoneNumber.value
     }
 
-    console.log(payload)
+    selectedIssue.value = ''
+    reportDetails.value = ''
+
+    // open.value = false
     
     try {
         await reportStore.postReport(payload);
-        // open.value = false
+        success.value = true // Set success state to true
+        setTimeout(() => {
+            open.value = false // Close modal after 2 seconds
+            success.value = false // Reset success state
+        }, 2000); // Adjust delay as needed
     } catch (error) {
-        console.log(error)
+        console.error('Error submitting report:', error)
+        alert('An error occurred while submitting the report.')
     }
-
-    //   try {
-    //     const { data, error } = await useFetch('/api/reports', {
-    //       method: 'POST',
-    //       body: payload
-    //     })
-
-    //     if (error.value) {
-    //       throw new Error(error.value.message || 'Failed to submit report')
-    //     }
-
-    //     alert('Report submitted successfully!')
-    //     closeModal() // Close modal on success
-    //   } catch (error) {
-    //     console.error('Error submitting report:', error)
-    //     alert('An error occurred while submitting the report.')
-    //   }
 }
 </script>
 
@@ -107,6 +97,16 @@ const submitReport = async () => {
                 <!-- Modal Content -->
                 <div style="background-color: rgb(34, 35, 38)"
                     class="rounded-lg shadow-lg p-6 w-full max-w-md relative">
+                    <!-- Success SVG -->
+                    <transition name="fade">
+                        <div v-if="success" style="background-color: rgb(34, 35, 38)" class="absolute inset-0 flex items-center justify-center  bg-opacity-100 rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 text-green-500" viewBox="0 0 24 24">
+                                <path fill="currentColor"
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                        </div>
+                    </transition>
+
                     <!-- Modal Title -->
                     <h2 class="text-lg font-semibold text-gray-100">Report an Issue</h2>
                     <p class="text-xs text-gray-200 mb-4">Help improve safety and service by reporting incidents.</p>
@@ -131,9 +131,9 @@ const submitReport = async () => {
 
                     <!-- Issue Selection -->
                     <div class="mb-4">
-                        <label class="block  text-sm text-left font-medium text-gray-200">Select Issue</label>
+                        <label class="block text-sm text-left font-medium text-gray-200">Select Issue</label>
                         <select v-model="selectedIssue"
-                            class="w-full mt-1 p-2 border bg-slate-800 text-xs text-gray-200   border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500">
+                            class="w-full mt-1 p-2 border bg-slate-800 text-xs text-gray-200 border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500">
                             <option disabled value="">Select an issue...</option>
                             <option v-for="issue in issues" :key="issue" :value="issue">{{ issue }}</option>
                         </select>
@@ -198,5 +198,17 @@ const submitReport = async () => {
 .fade-enter-from,
 .fade-leave-to {
     opacity: 0;
+}
+
+/* Optional: Animation for success SVG */
+.success-enter-active,
+.success-leave-active {
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.success-enter-from,
+.success-leave-to {
+    opacity: 0;
+    transform: scale(0.8);
 }
 </style>

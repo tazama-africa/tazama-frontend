@@ -19,7 +19,7 @@
                     </nuxt-link>
                 </div>
                 <div class="flex gap-4 items-center py-2 pr-4">
-                     
+
                     <nuxt-link to="/profile"
                         class="flex items-center justify-center w-6 h-6 text-xs overflow-hidden bg-blue-500 text-white rounded-full">
                         <span>
@@ -43,21 +43,19 @@
         <!-- List of Trips -->
         <div class="mt-[13vh] px-2 pb-4 flex-grow overflow-y-auto">
 
-                <div class="relative mt-1">
-                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                        </svg>
-                    </div>
-                    <input v-model="reportStore.searchQuery" type="text"
-                        placeholder="Search issue,   fleet no..." 
-                        class="block w-full p-4 py-2 ps-10 text-sm text-gray-50 border border-gray-600 rounded-2xl focus:ring-blue-500 focus:border-blue-500 bg-slate-800"
-                           />
-                    <button type="submit"
-                        class="text-white absolute end-1.5 bottom-1.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-1 ">Search</button>
+            <div class="relative mt-1">
+                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                    </svg>
                 </div>
+                <input v-model="reportStore.searchQuery" type="text" placeholder="Search issue,   fleet no..."
+                    class="block w-full p-4 py-2 ps-10 text-sm text-gray-50 border border-gray-600 rounded-2xl focus:ring-blue-500 focus:border-blue-500 bg-slate-800" />
+                <button type="submit"
+                    class="text-white absolute end-1.5 bottom-1.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-1 ">Search</button>
+            </div>
 
             <div class="flex text-sm justify-between items-center mt-3 pl-2">
                 <div>
@@ -65,11 +63,11 @@
                 </div>
                 <div>
                     <select v-model="reportStore.dateFilter" class="p-2 px-4 text-xs rounded-xl">
-                <option value="all">All</option>
-                <option value="yesterday">Yesterday</option>
-                <option value="last7days">Last 7 Days</option>
-                <option value="lastMonth">Last Month</option>
-            </select>
+                        <option value="all">All</option>
+                        <option value="yesterday">Yesterday</option>
+                        <option value="last7days">Last 7 Days</option>
+                        <option value="lastMonth">Last Month</option>
+                    </select>
                 </div>
             </div>
             <div v-for="(trip, index) in reportStore.filteredReports" :key="trip.id"

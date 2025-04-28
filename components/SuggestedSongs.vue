@@ -7,10 +7,16 @@
       >
         <div class="flex gap-3 items-center">
           <img
+          src='https://images.rawpixel.com/dark_image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTAzL3JtNjA5ZGVzaWduLWVsZW1lbnRncm91cDAxLWJtLTAwMi5wbmc.png'
+            alt="album cover"
+            class="w-9 h-9 object-cover rounded-md shadow-md"
+          />
+          <!-- <img
+          src='https://images.rawpixel.com/dark_image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTAzL3JtNjA5ZGVzaWduLWVsZW1lbnRncm91cDAxLWJtLTAwMi5wbmc.png'
             :src="song.image"
             alt="album cover"
             class="w-12 h-12 object-cover rounded-md shadow-md"
-          />
+          /> -->
           <div>
             <div class="font-semibold">{{ song.title }}</div>
             <div class="text-xs text-gray-400">{{ song.artist }}</div>

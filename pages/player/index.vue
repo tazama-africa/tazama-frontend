@@ -60,7 +60,7 @@
       </div>
   
       <!-- connect Session -->
-      <ConnectSession />
+      <ConnectSessionPlayer />
     </div>
   
     <!-- trending genres -->
