@@ -19,25 +19,22 @@
                     </nuxt-link>
                 </div>
                 <div class="flex gap-4 items-center py-2 pr-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" viewBox="0 0 24 24">
-                        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"
-                            d="m21 21l-3.5-3.5M17 10a7 7 0 1 1-14 0a7 7 0 0 1 14 0Z" />
-                    </svg>
-                    <div
+                     
+                    <nuxt-link to="/profile"
                         class="flex items-center justify-center w-6 h-6 text-xs overflow-hidden bg-blue-500 text-white rounded-full">
                         <span>
                             <UserProfile />
                         </span>
-                    </div>
+                    </nuxt-link>
                 </div>
             </div>
 
             <div class="pl-5 mt-3 font-bold text-white text-xl absolute bottom-2">
-                <div >
+                <div>
                     Reports
                 </div>
                 <p class="text-xs text-gray-300 font-normal mt-1">
-                    Get a deeper insight into your reports
+                    Get a deeper insight into your activity
                 </p>
             </div>
 
@@ -46,16 +43,46 @@
         <!-- List of Trips -->
         <div class="mt-[13vh] px-2 pb-4 flex-grow overflow-y-auto">
 
-            <div v-for="(trip, index) in trips" :key="trip.id" class="border-b border-slate-900 shadow-sm mb-4">
+                <div class="relative mt-1">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                        </svg>
+                    </div>
+                    <input v-model="reportStore.searchQuery" type="text"
+                        placeholder="Search issue,   fleet no..." 
+                        class="block w-full p-4 py-2 ps-10 text-sm text-gray-50 border border-gray-600 rounded-2xl focus:ring-blue-500 focus:border-blue-500 bg-slate-800"
+                           />
+                    <button type="submit"
+                        class="text-white absolute end-1.5 bottom-1.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-1 ">Search</button>
+                </div>
+
+            <div class="flex text-sm justify-between items-center mt-3 pl-2">
+                <div>
+                    Filter
+                </div>
+                <div>
+                    <select v-model="reportStore.dateFilter" class="p-2 px-4 text-xs rounded-xl">
+                <option value="all">All</option>
+                <option value="yesterday">Yesterday</option>
+                <option value="last7days">Last 7 Days</option>
+                <option value="lastMonth">Last Month</option>
+            </select>
+                </div>
+            </div>
+            <div v-for="(trip, index) in reportStore.filteredReports" :key="trip.id"
+                class="border-b border-slate-900 shadow-sm mb-4">
                 <div class="flex items-center justify-between p-4 cursor-pointer" @click="toggleTrip(index)">
                     <div class="flex items-center space-x-4">
                         <div
                             class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold">
-                            {{ trip.id }}
+                            {{ trip.firstDigit }}
                         </div>
                         <div>
-                            <h3 class="text-sm font-semibold">{{ trip.name }}</h3>
-                            <p class="text-xs text-gray-500">{{ formatDate(trip.date) }}</p>
+                            <h3 class="text-sm font-semibold">{{ trip.fleetNo }}</h3>
+                            <p class="text-xs text-gray-500">{{ formatDate(trip.createdAt) }}</p>
                         </div>
                     </div>
                     <button class="focus:outline-none">
@@ -80,7 +107,7 @@
                                     </svg>
                                 </span>
                                 <h3 class="font-medium leading-tight text-gray-50">Vehicle Info</h3>
-                                <p class="text-xs">KBX | {{ trip.details.route }}</p>
+                                <p class="text-xs">KBX | {{ trip.fleetNo }}</p>
                             </li>
                             <li class="mb-5 ms-6">
                                 <span
@@ -92,7 +119,7 @@
                                     </svg>
                                 </span>
                                 <h3 class="font-medium leading-tight text-gray-50">Report Issue</h3>
-                                <p class="text-xs">{{ trip.details.issue }}</p>
+                                <p class="text-xs">{{ trip.issue }}</p>
                             </li>
                             <li class="ms-6">
                                 <span
@@ -104,7 +131,7 @@
                                     </svg>
                                 </span>
                                 <h3 class="font-medium leading-tight text-gray-50">Message</h3>
-                                <p class="text-xs">{{ trip.details.message }}</p>
+                                <p class="text-xs">{{ trip.details }}</p>
                             </li>
                         </ol>
                     </div>
@@ -113,7 +140,7 @@
                         <div class="mt-4 text-right">
                             <button
                                 class="px-3 py-1 flex items-center gap-2 bg-red-600 text-white rounded-2xl text-xs hover:bg-red-700"
-                                @click="reportTrip(trip.id)">
+                                @click="deleteTrip(trip.id)">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5" viewBox="0 0 24 24">
                                     <path fill="currentColor"
                                         d="M7.616 20q-.672 0-1.144-.472T6 18.385V6H5V5h4v-.77h6V5h4v1h-1v12.385q0 .69-.462 1.153T16.384 20zM17 6H7v12.385q0 .269.173.442t.443.173h8.769q.23 0 .423-.192t.192-.424zM9.808 17h1V8h-1zm3.384 0h1V8h-1zM7 6v13z" />
@@ -132,149 +159,15 @@
 import { ref } from 'vue'
 import UserProfile from '~/components/UserProfile.vue' // Ensure this component exists
 
-// Sample trip data in JSON format
-const trips = ref([
-    {
-        id: 1,
-        name: 'Summer Road Trip',
-        date: '2025-06-15',
-        details: {
-            location: 'Grand Canyon, AZ',
-            message: 'message is too short',
-            issue: 'Over Pricing',
-            route: 'Nairobi - Thika',
-            rating: 4.5,
-            contacts: 'John Doe (555-123-4567)',
-            amountPaid: 450.00
-        }
-    },
-    {
-        id: 2,
-        name: 'Coastal Adventure',
-        date: '2025-07-22',
-        details: {
-            location: 'Big Sur, CA',
-            issue: 'Over Speeding',
-            message: 'message is too long',
-            route: 'San Francisco to Big Sur via Pacific Coast Highway',
-            rating: 4.8,
-            contacts: 'Jane Smith (555-987-6543)',
-            amountPaid: 600.00
-        }
-    },
-    {
-        id: 3,
-        name: 'Mountain Escape',
-        date: '2025-08-10',
-        details: {
-            location: 'Rocky Mountains, CO',
-            message: 'Looking forward to this adventure!',
-            issue: 'Flat Tire',
-            route: 'Denver - Estes Park',
-            rating: 4.2,
-            contacts: 'Mark Johnson (555-111-2233)',
-            amountPaid: 550.00
-        }
-    },
-    {
-        id: 4,
-        name: 'Desert Expedition',
-        date: '2025-09-01',
-        details: {
-            location: 'Mojave Desert, CA',
-            message: 'Adventuring through the heat!',
-            issue: 'Engine Overheating',
-            route: 'Los Angeles - Death Valley',
-            rating: 4.7,
-            contacts: 'Emily Davis (555-456-7890)',
-            amountPaid: 700.00
-        }
-    },
-    {
-        id: 5,
-        name: 'Island Getaway',
-        date: '2025-10-15',
-        details: {
-            location: 'Maui, HI',
-            message: 'Sun, sand, and relaxation!',
-            issue: 'No issues',
-            route: 'Honolulu - Lahaina',
-            rating: 5.0,
-            contacts: 'Luke Evans (555-234-5678)',
-            amountPaid: 800.00
-        }
-    },
-    {
-        id: 6,
-        name: 'City Lights Tour',
-        date: '2025-11-05',
-        details: {
-            location: 'New York City, NY',
-            message: 'Exploring the city that never sleeps',
-            issue: 'Lost luggage',
-            route: 'Central Park - Times Square',
-            rating: 4.3,
-            contacts: 'Sophia Lee (555-678-1234)',
-            amountPaid: 650.00
-        }
-    },
-    {
-        id: 7,
-        name: 'Wildlife Safari',
-        date: '2025-12-18',
-        details: {
-            location: 'Serengeti, TZ',
-            message: 'Witnessing nature in its purest form',
-            issue: 'Delayed flights',
-            route: 'Arusha - Serengeti National Park',
-            rating: 4.9,
-            contacts: 'David Miller (555-345-6789)',
-            amountPaid: 1000.00
-        }
-    },
-    {
-        id: 8,
-        name: 'Historical Exploration',
-        date: '2026-01-20',
-        details: {
-            location: 'Rome, IT',
-            message: 'Exploring ancient landmarks',
-            issue: 'Crowded attractions',
-            route: 'Colosseum - Roman Forum',
-            rating: 4.6,
-            contacts: 'Anna Green (555-222-3344)',
-            amountPaid: 400.00
-        }
-    },
-    {
-        id: 9,
-        name: 'Northern Lights Tour',
-        date: '2026-02-12',
-        details: {
-            location: 'Reykjavik, IS',
-            message: 'Chasing the northern lights',
-            issue: 'Cold weather',
-            route: 'Reykjavik - Thingvellir National Park',
-            rating: 4.8,
-            contacts: 'Chris White (555-654-9870)',
-            amountPaid: 950.00
-        }
-    },
-    {
-        id: 10,
-        name: 'Wine Country Tour',
-        date: '2026-03-05',
-        details: {
-            location: 'Napa Valley, CA',
-            message: 'Enjoying the finest wines',
-            issue: 'Rainy weather',
-            route: 'Napa - Sonoma',
-            rating: 4.4,
-            contacts: 'Olivia Brown (555-777-1112)',
-            amountPaid: 750.00
-        }
-    }
-])
+import { useReportStore } from '@/stores/reports';
+
+
+const reportStore = useReportStore()
+
+onMounted(() => {
+    reportStore.getReportStore()
+})
+
 
 const openTrip = ref(null)
 
@@ -293,9 +186,9 @@ const formatDate = (dateString) => {
 }
 
 // Handle report action
-const reportTrip = (tripId) => {
+const deleteTrip = async (tripId) => {
     // Implement report functionality (e.g., API call)
-    alert(`Reporting trip with ID: ${tripId}`)
+    await reportStore.deleteReport(tripId)
 }
 </script>
 

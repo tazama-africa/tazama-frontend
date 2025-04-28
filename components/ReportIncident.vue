@@ -1,6 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useClipboard } from '@vueuse/core'
+import { useReportStore } from '@/stores/reports';
+import { useAuthStore } from "@/stores/auth";
+import { watchEffect, ref, computed } from "vue";
+
 const props = defineProps<{
     playerNo: string
 }>()
@@ -11,6 +14,11 @@ const reportDetails = ref('')
 const matatuPhoneNumber = ref('+254712345678')
 const fleetNo = ref('') // New ref for Fleet No input
 const { copy, copied } = useClipboard({ source: matatuPhoneNumber })
+
+const reportStore = useReportStore();
+const authStore = useAuthStore();
+
+const username = ref("G");
 
 const issues = [
     'Reckless Driving',
@@ -28,6 +36,12 @@ const closeModal = () => {
     open.value = false
 }
 
+
+watchEffect(() => {
+  const email = authStore.user?.email || "Guest";
+  username.value = email     // Get the first letter and ensure it's uppercase
+});
+
 // Function to submit report to API
 const submitReport = async () => {
     if (!selectedIssue.value || !reportDetails.value) {
@@ -36,6 +50,7 @@ const submitReport = async () => {
     }
 
     const payload = {
+        user: username.value,
         fleetNo: props.playerNo,
         plateNo: 'KAV 455W',
         issue: selectedIssue.value,
@@ -44,6 +59,13 @@ const submitReport = async () => {
     }
 
     console.log(payload)
+    
+    try {
+        await reportStore.postReport(payload);
+        // open.value = false
+    } catch (error) {
+        console.log(error)
+    }
 
     //   try {
     //     const { data, error } = await useFetch('/api/reports', {
