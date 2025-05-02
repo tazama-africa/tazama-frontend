@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full h-80   bg-cover bg-center overflow-x-hidden"
+  <div class="relative w-full h-[45%]   bg-cover bg-center overflow-x-hidden"
       style="background-image: url('https://images.pexels.com/photos/1114690/pexels-photo-1114690.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');">
       <!-- Gradient Overlay -->
       <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 via-40% to-transparent opacity-90 z-0">

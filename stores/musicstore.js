@@ -19,6 +19,7 @@ export const useMusicStore = defineStore("music", {
     playlistdata: [],
     songsdata: [],
     songs: [],
+    nownextsongs: [],
     genredata: [], // Stores genre data
     playlist: [],
     loading: false,
@@ -41,6 +42,20 @@ export const useMusicStore = defineStore("music", {
           icon: "error",
           title: "Failed to load genres",
         });
+      } finally {
+        this.loading = false;
+      }
+    },
+    async getNowNextData() {
+      this.loading = true;
+      this.error = null;
+      try {
+        const response = await musicService.getCurrentSongService();
+        this.nownextsongs = response || []; 
+      } catch (error) {
+        this.error = "Failed to fetch Now & Next";
+        console.log(error)
+      
       } finally {
         this.loading = false;
       }

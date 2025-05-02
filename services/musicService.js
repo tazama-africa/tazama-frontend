@@ -9,6 +9,7 @@ export const requestOptions = {
 
 export const musicService = {
   getGenreService,
+  getCurrentSongService,
   likesongService,
   suggestSongService,
 };
@@ -21,6 +22,19 @@ async function getGenreService() {
       method: "GET",
   });
 }
+
+
+async function getCurrentSongService() {
+  const API_URL = useRuntimeConfig().public.apiBase;
+  const fleet_no = localStorage.getItem('fleet_no');  // this is a string
+
+  return await $fetch(`${API_URL}/sessions/${fleet_no}/now-and-next/`, {
+      method: "GET",
+      headers: headers,
+  });
+}
+
+
 
 async function likesongService(songId) {
   const API_URL = useRuntimeConfig().public.apiBase;
