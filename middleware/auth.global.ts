@@ -1,5 +1,4 @@
 export default defineNuxtRouteMiddleware(async (to) => {
-
   // Skip middleware during SSR to avoid premature redirects
   if (process.server) {
     return;
@@ -13,9 +12,8 @@ export default defineNuxtRouteMiddleware(async (to) => {
     "/accounts/register",
     "/accounts/forgot-password",
     "/verify-code",
-    "/password-reset-confirm",
+    "/accounts/password-reset-confirm",
   ];
-
 
   // Load auth data on client-side if not already loaded
   if (!authStore.token) {
@@ -23,16 +21,17 @@ export default defineNuxtRouteMiddleware(async (to) => {
   }
 
   // Allow public routes without authentication
-  if (publicRoutes.includes(to.path)) {
+  const isPublicRoute = publicRoutes.some(
+    (route) => to.path === route || to.path.startsWith(route + "/")
+  );
+
+  if (isPublicRoute) {
     return;
   }
-
   // Check if user is authenticated
-  if (!authStore.token ) {
+  if (!authStore.token) {
     return navigateTo("/get-started");
-
   }
-  
 
   // Refresh token if needed
   const isTokenValid = await authStore.checkAndRefreshToken();

@@ -22,6 +22,8 @@ export const useReportStore = defineStore("report", {
     report: [],
     reports: [],
     history: [],
+    preffered_genre: [],
+    liked_songs:[],
     filteredHistory: [], // <--- NEW: this will store the filtered history
     searchQuery: '',
     dateFilter: 'all', // 'yesterday', 'last7days', 'lastMonth', 'all'
@@ -56,7 +58,26 @@ export const useReportStore = defineStore("report", {
       try {
         const response = await reportService.getHistory();
         this.history = response.history;
+        console.log(response)
         this.applyDateFilter(); // Automatically apply current filter
+      } catch (error) {
+        console.error('Failed to fetch reports:', error);
+      }
+    },
+    async getLikedSongsStore() {
+      try {
+        const response = await reportService.getLikedSongs();
+        this.liked_songs = response.liked_songs;
+        console.log(response)
+      } catch (error) {
+        console.error('Failed to fetch reports:', error);
+      }
+    },
+    async getPrefferedGenreStore() {
+      try {
+        const response = await reportService.getPrefferedGenre();
+        this.preffered_genre = response.genres;
+        console.log(response)
       } catch (error) {
         console.error('Failed to fetch reports:', error);
       }

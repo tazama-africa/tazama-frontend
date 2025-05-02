@@ -11,14 +11,14 @@
         <div class="lg:w-[75%]  w-full lg:m-4 lg:space-y-4 ">
             
             <div style="background-color: #030303" class="h-[95%]  overflow-y-scroll lg:rounded-2xl shadow-xl lg:p-0 p-0 ">
-                <slot />
+              <slot />
                 <BottomNav />
             </div>
         </div>
     </div>
 </template>
 
-<script setup>
+<script setup> 
 import { useAuthStore } from "@/stores/auth";
 import { onMounted } from "vue";
 
@@ -32,4 +32,22 @@ onMounted(() => {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+.page-left-enter-active,
+.page-right-enter-active,
+.page-left-leave-active,
+.page-right-leave-active {
+  transition: all .3s linear;
+}
+
+.page-left-enter-from, .page-right-leave-to {
+  transform: translateX(100%);
+}
+
+.page-left-leave-to, .page-right-enter-from {
+  transform: translateX(-100%);
+}
+
+.page-left-enter-to, .page-right-enter-to {
+  transform: translateX(0);
+}
 </style>

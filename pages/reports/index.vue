@@ -2,7 +2,7 @@
     <div class="min-h-screen flex flex-col">
         <!-- Top Navigation -->
         <div class="fixed top-0 left-0 w-full h-[13vh] bg-cover bg-center overflow-x-hidden z-10"
-            style="background-image: url('https://www.nepad.org/sites/default/files/styles/mega_banner_1920x600/public/2021-09/Med%20Safety%20App%20Microsite.jpg?itok=i5uKfVOf');">
+            style="background-image: url('/report.jpg');">
             <!-- Gradient Overlay -->
             <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 via-60% to-transparent opacity-80">
             </div>

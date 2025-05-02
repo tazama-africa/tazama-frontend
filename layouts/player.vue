@@ -11,7 +11,9 @@
         <div class="lg:w-[75%] w-full lg:m-4 lg:space-y-4 ">
             
             <div style="background-color: #030303" class="h-[95%]  overflow-y-scroll lg:rounded-2xl shadow-xl lg:p-0 p-0 ">
-                <slot />
+                <Transition :name="$route.meta.pageTransition?.name">
+                   <slot></slot>  
+                </Transition>
                 <BottomNav />
                 <!-- <BottomNavPlayer /> -->
             </div>
